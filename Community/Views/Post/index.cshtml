@@ -1,0 +1,266 @@
+﻿@{
+    ViewBag.Title = "Post Ads Add";
+}
+
+<div class="container">
+    <!-- BEGIN PAGE BREADCRUMB -->
+    <ul class="page-breadcrumb breadcrumb">
+        <li>
+            <a href="#">Home</a><i class="fa fa-circle"></i>
+        </li>
+        <li class="active">
+            index
+        </li>
+    </ul>
+    <!-- END PAGE BREADCRUMB -->
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row margin-top-10">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">Post Ads</span>
+                        <span class="caption-helper hide">weekly stats...</span>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <form role="form">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        <label>
+                                            Ad Type
+                                        </label>
+                                    </div>
+
+                                    <div class="checkbox-list">
+                                        <label>
+                                            <input type="radio" name="ad_type" checked> Offering
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="ad_type"> Wanted
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>
+                                            Advertiser Type
+                                        </label>
+                                    </div>
+
+                                    <div class="checkbox-list">
+                                        <label>
+                                            <input type="radio" name="ads_type" checked> individual
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="ads_type"> Professional/Business
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>
+                                            Ad Expires
+                                        </label>
+                                    </div>
+
+                                    <div class="checkbox-list">
+                                        <label>
+                                            <input type="date" class="form-control" name="duetime" />
+                                        </label>
+                                        <label>
+                                            Maxium Ad Duration is 30 days
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label>
+                                        Select Location
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label class="control-label">
+                                        Country *
+                                    </label>
+                                    <select class="form-control" id="country" name="country">
+                                        <option>--Select County--</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="control-label">
+                                        Region *
+                                    </label>
+                                    <select class="form-control" id="region" name="region">
+                                        <option>--Select Region--</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="control-label">
+                                        City *
+                                    </label>
+                                    <select class="form-control" id="city" name="city">
+                                        <option>--Select City--</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label class="control-label">
+                                        Select Category *
+                                    </label>
+                                    <select class="form-control" id="category" name="cateogry">
+                                        <option>--Select Category--</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="control-label">&nbsp;</label>
+                                    <select class="form-control" id="subcategory" name="subcategory">
+                                        <option>--Select SubCategory--</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">
+                                        Title *
+                                    </label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label class="control-label">
+                                        Price *
+                                    </label>
+                                    <select class="form-control">
+                                        <option>--Select Category--</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="control-label">&nbsp;</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">
+                                        Description *
+                                    </label>
+                                    <textarea class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">
+                                        Tags
+                                    </label>
+                                    <input type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="portlet box blue-hoki">
+                                        <div class="portlet-title">
+                                            <div class="caption">
+                                                CONTACT DETAILS
+                                            </div>
+                                        </div>
+                                        <div class="portlet-body form clearfix">
+                                            <!-- BEGIN FORM-->
+                                            <form action="javascript:;" class="form-horizontal">
+                                                <div class="form-body">
+                                                    <div class="form-group col-md-12">
+                                                        <label class="col-md-3 control-label">Phone</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control" placeholder="Enter text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label class="col-md-3 control-label">Street Adress</label>
+                                                        <div class="col-md-9">
+                                                            <textarea type="text" class="form-control" placeholder="Enter text"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label class="col-md-3 control-label">Postal Code</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control" placeholder="Enter text">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!-- END FORM-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="portlet box blue-hoki">
+                                        <div class="portlet-title">
+                                            <div class="caption">
+                                                ATTACHMENTS
+                                            </div>
+                                        </div>
+                                        <div class="portlet-body form clearfix">
+                                            <!-- BEGIN FORM-->
+                                            <form action="javascript:;" class="form-horizontal">
+                                                <div class="form-body">
+                                                    <div class="form-group col-md-12">
+                                                        <label class="col-md-3 control-label">Select Images</label>
+                                                        <div class="col-md-9">
+                                                            <input type="file" class="form-control" placeholder="Enter text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label class="col-md-3 control-label">Video Url</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control" placeholder="Enter text">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!-- END FORM-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-2">
+                                        <button type="submit" class="btn green">SAVE AS DRAFT</button>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <button type="button" class="btn red">Post</button>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <button type="button" class="btn default">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+</div>
+@section scripts {
+    <script>
+        $.get("https://api.first.org/data/v1/countries", function (response) {
+            console.log(response);
+        });
+    </script>
+}
