@@ -75,15 +75,6 @@ namespace Community.Migrations
                 .Index(t => t.PostId);
             
             CreateTable(
-                "dbo.Tags",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
                 "dbo.Cities",
                 c => new
                     {
@@ -156,6 +147,15 @@ namespace Community.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.Tags",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.AspNetUsers",
                 c => new
                     {
@@ -200,19 +200,6 @@ namespace Community.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
-            //CreateTable(
-            //    "dbo.TagPosts",
-            //    c => new
-            //        {
-            //            Tag_Id = c.Int(nullable: false),
-            //            Post_Id = c.Int(nullable: false),
-            //        })
-            //    .PrimaryKey(t => new { t.Tag_Id, t.Post_Id })
-            //    .ForeignKey("dbo.Tags", t => t.Tag_Id, cascadeDelete: true)
-            //    .ForeignKey("dbo.Posts", t => t.Post_Id, cascadeDelete: true)
-            //    .Index(t => t.Tag_Id)
-            //    .Index(t => t.Post_Id);
-            
         }
         
         public override void Down()
@@ -221,13 +208,9 @@ namespace Community.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.TagPosts", "Post_Id", "dbo.Posts");
-            DropForeignKey("dbo.TagPosts", "Tag_Id", "dbo.Tags");
             DropForeignKey("dbo.ReplyAds", "PostId", "dbo.Posts");
             DropForeignKey("dbo.Attachments", "PostId", "dbo.Posts");
             DropForeignKey("dbo.Posts", "CategoryId", "dbo.Categories");
-            DropIndex("dbo.TagPosts", new[] { "Post_Id" });
-            DropIndex("dbo.TagPosts", new[] { "Tag_Id" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
@@ -237,16 +220,15 @@ namespace Community.Migrations
             DropIndex("dbo.ReplyAds", new[] { "PostId" });
             DropIndex("dbo.Posts", new[] { "CategoryId" });
             DropIndex("dbo.Attachments", new[] { "PostId" });
-            //DropTable("dbo.TagPosts");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.Tags");
             DropTable("dbo.States");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Countries");
             DropTable("dbo.Cities");
-            DropTable("dbo.Tags");
             DropTable("dbo.ReplyAds");
             DropTable("dbo.Categories");
             DropTable("dbo.Posts");

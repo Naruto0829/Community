@@ -114,3 +114,4 @@ D:\Work\Community\Community\obj\Debug\Community.dll
 D:\Work\Community\Community\obj\Debug\Community.pdb
 D:\Work\Community\Community\obj\Debug\Community.Migrations.initialize.resources
 D:\Work\Community\Community\obj\Debug\Community.csproj.GenerateResource.cache
+D:\Work\Community\Community\obj\Debug\Community.Migrations.updateforiegnkey.resources

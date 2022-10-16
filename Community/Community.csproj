@@ -191,9 +191,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202210162153166_initialize.cs" />
-    <Compile Include="Migrations\202210162153166_initialize.Designer.cs">
-      <DependentUpon>202210162153166_initialize.cs</DependentUpon>
+    <Compile Include="Migrations\202210162208211_initialize.cs" />
+    <Compile Include="Migrations\202210162208211_initialize.Designer.cs">
+      <DependentUpon>202210162208211_initialize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202210162209296_update-foriegn-key.cs" />
+    <Compile Include="Migrations\202210162209296_update-foriegn-key.Designer.cs">
+      <DependentUpon>202210162209296_update-foriegn-key.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -295,8 +299,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202210162153166_initialize.resx">
-      <DependentUpon>202210162153166_initialize.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202210162208211_initialize.resx">
+      <DependentUpon>202210162208211_initialize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210162209296_update-foriegn-key.resx">
+      <DependentUpon>202210162209296_update-foriegn-key.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

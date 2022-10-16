@@ -13,7 +13,7 @@ namespace Community.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202210162153166_initialize"; }
+            get { return "202210162208211_initialize"; }
         }
         
         string IMigrationMetadata.Source
