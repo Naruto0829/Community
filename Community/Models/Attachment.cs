@@ -12,5 +12,7 @@ namespace Community.Models
         public string FileName { get; set; }
         public string HashName { get; set; }
         public string FilePath { get; set; }
+
+        public virtual Post Post { get; set; }
     }
 }

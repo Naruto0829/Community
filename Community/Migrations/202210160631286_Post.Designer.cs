@@ -7,13 +7,13 @@ namespace Community.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Stateupdate5 : IMigrationMetadata
+    public sealed partial class Post : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Stateupdate5));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Post));
         
         string IMigrationMetadata.Id
         {
-            get { return "202210151535286_State-update5"; }
+            get { return "202210160631286_Post"; }
         }
         
         string IMigrationMetadata.Source
