@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="portlet-body form">
-                    <form action="/Post/save" method="post" role="form" enctype="multipart/form-data">
+                    <form id="postFrm" action="/Post/save" method="post" role="form" enctype="multipart/form-data" onsubmit="return validate()">
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-md-4">
@@ -46,9 +46,7 @@
                                             <input type="radio" name="ad_type" value="1"> Wanted
                                         </label>
                                     </div>
-
                                 </div>
-
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>
@@ -68,11 +66,12 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>
-                                            Ad Expires
+                                            Ad Expires *
                                         </label>
                                     </div>
+                                    <div class="checkbox-list input-icon right">
+                                        <i class="fa"></i>
 
-                                    <div class="checkbox-list">
                                         <label>
                                             <input type="Date" class="form-control" id="expireTime" name="expireTime" value="@DateTime.UtcNow.ToString("yyy-MM-dd")" />
                                         </label>
@@ -162,7 +161,7 @@
                                     <label class="control-label">
                                         Description *
                                     </label>
-                                    <textarea class="form-control ckeditor" id="description" name="description"></textarea>
+                                    <textarea class="form-control wysihtml5" id="description" name="description" rows="10"></textarea>
                                 </div>
                             </div>
                             <div class="row">
@@ -218,7 +217,7 @@
                                             <!-- BEGIN FORM-->
                                                 <div class="form-body">
                                                     <div class="form-group col-md-12">
-                                                        <label class="col-md-3 control-label">Select Images</label>
+                                                        <label class="col-md-3 control-label">Select Images *</label>
                                                         <div class="col-md-9">
                                                             <input type="file" id="attachments" name="attachments[]" class="form-control" accept=".jpg, .png, .jpeg" placeholder="Enter text" multiple>
                                                         </div>
@@ -259,14 +258,12 @@
     <!-- END PAGE CONTENT INNER -->
 </div>
 @section scripts {
+    <script src="~/assets/page/scripts/post.js"></script>
     <script>
-
-        $('#tags').tagsInput({
-            width: 'auto',
-            'onAddTag': function () {
-                //alert(1);
-            },
+        $("#tags").select2({
+            tags: ["Testing", "Important", "Info", "Pending", "Completed", "Requested", "Approved"]
         });
+
 
         $(document).on("change", "#attachments", function (event) {
             const files = event.target.files;

@@ -110,7 +110,6 @@ namespace Community.Controllers
         {
             var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
             int userId = 1; /*User.Identity.GetUserId<int>();*/
-            int lastInsertedPostId = 0;
 
             Post pm = new Post();
             pm.UserId = userId;
@@ -131,13 +130,47 @@ namespace Community.Controllers
             pm.Status = 0;      //0: pending, 1: success
             dbContext.Posts.Add(pm);
             dbContext.SaveChanges();
-            lastInsertedPostId = pm.Id;
 
-            this.handleFile(Request.Files, lastInsertedPostId);
+            this.handleFile(Request.Files, pm.Id);
+            this.handleTag(collection.Get("Tags"), pm.Id);
 
-            //this.TagManagement(collection("Tags"));   // Add Attachments
+            return RedirectToAction("Result");
+        }
 
-            return RedirectToAction("Index");
+        public ActionResult Result()
+        {
+            return View();
+        }
+
+        private void handleTag(string tags, int postId)
+        {
+            string[] items = tags.Split(',');
+            var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+
+            dbContext.Database.ExecuteSqlCommand("DELETE FROM TagPosts where postId = " + postId + "");
+
+            if (tags != null && tags !="")
+            {
+                foreach (var item in items)
+                {
+                    Tag tagDB = new Tag();
+                    TagPost tagPost = new TagPost();
+
+                    var isExistTag = dbContext.Tags.Where(q => q.Name == item).SingleOrDefault();
+
+                    if (isExistTag == null)
+                    {
+                        tagDB.Name = item;
+                        dbContext.Tags.Add(tagDB);
+                        dbContext.SaveChanges();
+                    }
+
+                    tagPost.TagId = isExistTag == null ? tagDB.Id : isExistTag.Id;
+                    tagPost.PostId = postId;
+                    dbContext.TagPost.Add(tagPost);
+                    dbContext.SaveChanges();
+                }
+            }
         }
 
         private void handleFile(HttpFileCollectionBase fileCollection, int postId)
