@@ -5,9 +5,10 @@ using System.Web;
 
 namespace Community.Models
 {
-    public class PostModel
+    public class Post
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public int AdType { get; set; }
         public int AdvertiserType { get; set; }
         public DateTime ExpireTime { get; set; }
@@ -24,8 +25,9 @@ namespace Community.Models
         public string VideoUrl { get; set; }
         public int Status { get; set; }
 
-        public virtual ICollection<AttachmentModel> Images { get; set; }
+        public virtual ICollection<Attachment> Images { get; set; }
         public virtual ICollection<TagPost> TagPosts { get; set; }
+        public virtual ICollection<ReplyAds> ReplyAdses { get; set; }
         public virtual Category Category { get; set; }
     }
 }

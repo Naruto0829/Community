@@ -5,9 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using System.IO;
 
 namespace Community.Controllers
 {
+    [Authorize]
     public class PostController : Controller
     {
         // GET: Post
@@ -101,12 +104,16 @@ namespace Community.Controllers
         }
 
         // POST: Post/Save
+        [Authorize]
         [HttpPost, ValidateInput(false)]
-        public ActionResult Save( FormCollection collection )
+        public ActionResult Save( FormCollection collection)
         {
             var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+            int userId = 1; /*User.Identity.GetUserId<int>();*/
+            int lastInsertedPostId = 0;
 
-            PostModel pm = new PostModel();
+            Post pm = new Post();
+            pm.UserId = userId;
             pm.AdType = Convert.ToInt32(collection.Get("ad_type"));
             pm.AdvertiserType = Convert.ToInt32(collection.Get("ads_type"));
             pm.ExpireTime = DateTime.Parse(collection.Get("expireTime"));
@@ -121,15 +128,65 @@ namespace Community.Controllers
             pm.Address = collection.Get("streeAddress");
             pm.PostalCode = collection.Get("postalCode");
             pm.VideoUrl = collection.Get("videoUrl");
-            pm.Status = 0;
+            pm.Status = 0;      //0: pending, 1: success
             dbContext.Posts.Add(pm);
             dbContext.SaveChanges();
+            lastInsertedPostId = pm.Id;
+
+            this.handleFile(Request.Files, lastInsertedPostId);
+
+            //this.TagManagement(collection("Tags"));   // Add Attachments
 
             return RedirectToAction("Index");
         }
 
+        private void handleFile(HttpFileCollectionBase fileCollection, int postId)
+        {
+            if (fileCollection.Count > 0)
+            {
+                var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+                Attachment attachment = new Attachment();
+
+                for (int i = 0; i < fileCollection.Count; i++)
+                {
+                Random r = new Random();
+                string path = "-1";
+                int random = r.Next();
+                
+                    string extension = Path.GetExtension(fileCollection[i].FileName);
+                    if (extension.ToLower().Equals(".jpg") || extension.ToLower().Equals(".jpeg") || extension.ToLower().Equals(".png"))
+                    {
+                        try
+                        {
+                            path = Path.Combine(Server.MapPath("~/assets/uploads/"), random + Path.GetFileName(fileCollection[i].FileName));
+                            fileCollection[i].SaveAs(path);
+                            path = "~/assets/uploads/" + random + Path.GetFileName(fileCollection[i].FileName);
+                            
+                            //Store images by postId
+
+                            attachment.PostId   = postId;
+                            attachment.FileName = fileCollection[i].FileName;
+                            attachment.FilePath = path;
+                            attachment.HashName = random + Path.GetFileName(fileCollection[i].FileName);
+                            dbContext.Attachments.Add(attachment);
+                            dbContext.SaveChanges();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            path = "-1";
+                        }
+                    }
+                    else
+                    {
+                        Response.Write("<script>only jpg and png</script>");
+                    }
+                }
+            }
+        }
 
         // POST: Post/Delete/5
+        [Authorize]
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

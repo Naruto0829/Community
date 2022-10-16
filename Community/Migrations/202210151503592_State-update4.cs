@@ -8,7 +8,7 @@ namespace Community.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.AttachmentModels",
+                "dbo.Attachments",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -19,7 +19,7 @@ namespace Community.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.TagModels",
+                "dbo.Tags",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -47,8 +47,8 @@ namespace Community.Migrations
             AddColumn("dbo.Countries", "Iso3", c => c.String());
             AlterColumn("dbo.States", "longitude", c => c.Decimal(nullable: false, precision: 18, scale: 2));
             AlterColumn("dbo.States", "latitude", c => c.Decimal(nullable: false, precision: 18, scale: 2));
-            DropTable("dbo.TagModels");
-            DropTable("dbo.AttachmentModels");
+            DropTable("dbo.Tags");
+            DropTable("dbo.Attachments");
         }
     }
 }

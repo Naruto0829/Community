@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Data.Entity;
-using Microsoft.AspNet.Identity;
-using Community.Models;
 
 namespace Community.Models
 {
-
-    public class Category
+    public class ReplyAds
     {
         public int Id { get; set; }
-        public string Name { get; set; }
         public int ParentId { get; set; }
         public int Level { get; set; }
-
-        public virtual ICollection<Post> Posts { get; set; }
+        public int PostId { get; set; }
+        public int UserId { get; set; }
+        public string Description { get; set; }
+        public virtual Post Post { get; set; }
     }
 }

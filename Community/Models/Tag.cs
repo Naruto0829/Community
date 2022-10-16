@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Community.Models
 {
-    public class TagModel
+    public class Tag
     {
         public int Id { get; set; }
         public string Name { get; set; }

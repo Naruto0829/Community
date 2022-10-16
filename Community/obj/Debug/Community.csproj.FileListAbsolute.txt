@@ -107,13 +107,7 @@ D:\Work\Community\Community\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Work\Community\Community\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Work\Community\Community\bin\Microsoft.Owin.Security.OAuth.xml
 D:\Work\Community\Community\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Work\Community\Community\obj\Debug\Community.csproj.CoreCompileInputs.cache
-D:\Work\Community\Community\obj\Debug\Community.csproj.CopyComplete
-D:\Work\Community\Community\obj\Debug\Community.dll
-D:\Work\Community\Community\obj\Debug\Community.pdb
-D:\Work\Community\Community\obj\Debug\Community.csprojAssemblyReference.cache
 D:\Work\Community\Community\obj\Debug\Community.Migrations.category.resources
-D:\Work\Community\Community\obj\Debug\Community.csproj.GenerateResource.cache
 D:\Work\Community\Community\obj\Debug\Community.Migrations.categoryupdate.resources
 D:\Work\Community\Community\obj\Debug\Community.Migrations.Country.resources
 D:\Work\Community\Community\obj\Debug\Community.Migrations.Countryupdate.resources
@@ -126,3 +120,8 @@ D:\Work\Community\Community\obj\Debug\Community.Migrations.Stateupdate4.resource
 D:\Work\Community\Community\obj\Debug\Community.Migrations.Stateupdate5.resources
 D:\Work\Community\Community\obj\Debug\Community.Migrations.removedforeignkeys.resources
 D:\Work\Community\Community\obj\Debug\Community.Migrations.addedforeignkeys.resources
+D:\Work\Community\Community\obj\Debug\Community.csproj.GenerateResource.cache
+D:\Work\Community\Community\obj\Debug\Community.csproj.CoreCompileInputs.cache
+D:\Work\Community\Community\obj\Debug\Community.csproj.CopyComplete
+D:\Work\Community\Community\obj\Debug\Community.dll
+D:\Work\Community\Community\obj\Debug\Community.pdb

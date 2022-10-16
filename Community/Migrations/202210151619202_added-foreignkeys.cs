@@ -10,9 +10,9 @@ namespace Community.Migrations
             CreateIndex("dbo.Cities", "CountryId");
             CreateIndex("dbo.Cities", "StateId");
             CreateIndex("dbo.States", "CountryId");
-            AddForeignKey("dbo.Cities", "CountryId", "dbo.Countries", "Id");
-            AddForeignKey("dbo.Cities", "StateId", "dbo.States", "Id");
-            AddForeignKey("dbo.States", "CountryId", "dbo.Countries", "Id");
+           // AddForeignKey("dbo.Cities", "CountryId", "dbo.Countries", "Id");
+            //AddForeignKey("dbo.Cities", "StateId", "dbo.States", "Id");
+            //AddForeignKey("dbo.States", "CountryId", "dbo.Countries", "Id");
         }
         
         public override void Down()
