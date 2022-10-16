@@ -1,0 +1,36 @@
+@model IEnumerable<Community.Models.CategoryVM>
+
+@{ var i = 0; var intent = 1;}
+
+@{
+    if (Model.ToList().Count > 0)
+    {
+        foreach (var item in Model)
+        {
+            {
+                i++;
+                intent = 2;
+                for (var j = 0; j < item.Level; j++)
+                {
+                    intent = item.Level * 20;
+                }
+
+            }
+            <tr>
+                <td>@i</td>
+                <td style="text-indent: @intent.ToString()px !important">@item.Name</td>
+                <td>
+                    <button onclick="onEdit(@item.Id, @item.ParentID, '@item.Name')">edit</button>
+                    <button onclick="onDelete(@item.Id)">delete</button>
+                </td>
+            </tr>
+
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="3" style="text-align: center">No record</td>
+        </tr>
+    }
+}

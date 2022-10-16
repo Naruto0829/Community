@@ -1,17 +1,110 @@
-﻿@{
-    ViewBag.Title = "Post";
+﻿@model IEnumerable<Community.Models.CategoryVM>
+@{
+    ViewBag.Title = "Category Management";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<div class="container">
+    <!-- BEGIN PAGE BREADCRUMB -->
+    <ul class="page-breadcrumb breadcrumb">
+        <li>
+            <a href="#">Category</a><i class="fa fa-circle"></i>
+        </li>
+        <li class="active">
+            index
+        </li>
+    </ul>
+    <!-- END PAGE BREADCRUMB -->
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row margin-top-10">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">Category</span>
+                        <span class="caption-helper hide">weekly stats...</span>
+                    </div>
+                </div>
+                <div class="portlet-body form clearfix">
+                    <div class="row col-md-12">
+                        <form class="form" method="post" action="/category/Create" onsubmit="return validate()">
+                            <div class="form-group col-md-3" id="categorySelect">
+                                @Html.Partial("categorySelect")
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" id="category" name="category" placeholder="Enter Category" />
+                            </div>
+                            <input type="hidden" id="editId" name ="editId" value="0" />
+                            <div class="form-group col-md-3">
+                                <button type="submit" id="addBtn" class="btn btn blue"><i class="fa fa-plus-circle"></i> Add</button>
+                            </div>
+                        </form>
+                            <button type="button" id="canCelBtn"  class="btn btn red" style="display:none;margin-left: -120px;">Cancel</button>
+                    </div>
+                    <table class="table" id="categoryHtml">
+                           <thead>
+                               <tr>
+                                   <th>No</th>
+                                   <th>Category Name</th>
+                                   <th>Action</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               @Html.Partial("table")
+                           </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+</div>
+@section scripts {
+    <script>
+        function validate() {
+            const category = $("#category").val();
+            if (category == "") {
+                alert("Category is required");
+                $("#category").focus();
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function onDelete(category_id) {
+
+            bootbox.confirm("Are you sure?", function (result) {
+                if (result) {
+                    $.post(`Category/Delete/${category_id}`, {}, function (res) {
+                        let tbodyHtml = $("#categoryHtml tbody");
+                        tbodyHtml.html(res)
+                        //categoryPanel.load('Categroy/CategorySelect');
+                        location.reload();
+                    })
+                }
+            });
+        }
+
+        function onEdit(category_id, parentId, str) {
+            $("#category").val(str);
+            $("#parentCateogry").val(parentId);
+            $("#editId").val(category_id);
+            $("#addBtn").text("Update");
+            $("#canCelBtn").show();
+        }
+
+        $(document).on("click", "#canCelBtn", function () {
+            $("#parentCateogry").val(0);
+            $("#editId").val(0);
+            $("#category").val("");
+            $("#addBtn").text("Add");
+            $(this).hide();
+
+        });
+
+    </script>
+}

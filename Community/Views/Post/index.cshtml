@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Community.Models.PostModelVm
+@{
     ViewBag.Title = "Post Ads Add";
 }
 
@@ -26,7 +27,7 @@
                     </div>
                 </div>
                 <div class="portlet-body form">
-                    <form role="form">
+                    <form action="/Post/save" method="post" role="form" enctype="multipart/form-data">
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-md-4">
@@ -39,10 +40,10 @@
 
                                     <div class="checkbox-list">
                                         <label>
-                                            <input type="radio" name="ad_type" checked> Offering
+                                            <input type="radio" name="ad_type" value="0" checked> Offering
                                         </label>
                                         <label>
-                                            <input type="radio" name="ad_type"> Wanted
+                                            <input type="radio" name="ad_type" value="1"> Wanted
                                         </label>
                                     </div>
 
@@ -57,10 +58,10 @@
 
                                     <div class="checkbox-list">
                                         <label>
-                                            <input type="radio" name="ads_type" checked> individual
+                                            <input type="radio" name="ads_type" value="0" checked> individual
                                         </label>
                                         <label>
-                                            <input type="radio" name="ads_type"> Professional/Business
+                                            <input type="radio" name="ads_type" value="1"> Professional/Business
                                         </label>
                                     </div>
                                 </div>
@@ -73,7 +74,7 @@
 
                                     <div class="checkbox-list">
                                         <label>
-                                            <input type="date" class="form-control" name="duetime" />
+                                            <input type="date" class="form-control" id="expireTime" name="expireTime" />
                                         </label>
                                         <label>
                                             Maxium Ad Duration is 30 days
@@ -94,7 +95,11 @@
                                         Country *
                                     </label>
                                     <select class="form-control" id="country" name="country">
-                                        <option>--Select County--</option>
+                                        <option value="0">--Select County--</option>
+                                        @foreach (var country in Model.countries)
+                                        {
+                                            <option data-currency="@country.CurrencySymbol" value="@country.Id">@country.Name</option>
+                                        }
                                     </select>
                                 </div>
                                 <div class="form-group col-md-3">
@@ -102,7 +107,7 @@
                                         Region *
                                     </label>
                                     <select class="form-control" id="region" name="region">
-                                        <option>--Select Region--</option>
+                                        <option value="0">--Select Region--</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-3">
@@ -110,7 +115,7 @@
                                         City *
                                     </label>
                                     <select class="form-control" id="city" name="city">
-                                        <option>--Select City--</option>
+                                        <option value="0">--Select City--</option>
                                     </select>
                                 </div>
                             </div>
@@ -119,14 +124,19 @@
                                     <label class="control-label">
                                         Select Category *
                                     </label>
-                                    <select class="form-control" id="category" name="cateogry">
-                                        <option>--Select Category--</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label class="control-label">&nbsp;</label>
-                                    <select class="form-control" id="subcategory" name="subcategory">
-                                        <option>--Select SubCategory--</option>
+                                    <select class="form-control" id="parentCateogry" name="parentCateogry">
+                                        <option value="0">--Select Parent Category--</option>
+                                        @{ var ctStr = ""; }
+                                        @foreach (var item in Model.categories)
+                                        {
+                                            ctStr = "";
+
+                                            for (var j = 0; j < item.Level * 2; j++)
+                                            {
+                                                ctStr += "-";
+                                            }
+                                            <option value="@item.Id">@ctStr @item.Name</option>
+                                        }
                                     </select>
                                 </div>
                             </div>
@@ -135,7 +145,7 @@
                                     <label class="control-label">
                                         Title *
                                     </label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" id="title" name="title" style="max-width: 100%;">
                                 </div>
                             </div>
                             <div class="row">
@@ -143,21 +153,16 @@
                                     <label class="control-label">
                                         Price *
                                     </label>
-                                    <select class="form-control">
-                                        <option>--Select Category--</option>
-                                    </select>
+                                    <input type="text" id="price" placeholder="" name="price" class="form-control">
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label class="control-label">&nbsp;</label>
-                                    <input type="text" class="form-control">
-                                </div>
+                               
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label class="control-label">
                                         Description *
                                     </label>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control ckeditor" id="description" name="description"></textarea>
                                 </div>
                             </div>
                             <div class="row">
@@ -165,7 +170,7 @@
                                     <label class="control-label">
                                         Tags
                                     </label>
-                                    <input type="text" class="form-control" />
+                                    <input type="text" class="form-control" id="tags"  name="tags"/>
                                 </div>
                             </div>
                             <div class="row">
@@ -183,19 +188,19 @@
                                                     <div class="form-group col-md-12">
                                                         <label class="col-md-3 control-label">Phone</label>
                                                         <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Enter text">
+                                                            <input type="text" class="form-control" placeholder="Enter Phone" id="phoneNumber" name="phoneNumber">
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-12">
                                                         <label class="col-md-3 control-label">Street Adress</label>
                                                         <div class="col-md-9">
-                                                            <textarea type="text" class="form-control" placeholder="Enter text"></textarea>
+                                                            <textarea type="text" class="form-control" placeholder="Enter Street Adress" id="streeAddress" name="streeAddress"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-12">
                                                         <label class="col-md-3 control-label">Postal Code</label>
                                                         <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Enter text">
+                                                            <input type="text" class="form-control" placeholder="Enter Postal Code" id="postalCode" name="postalCode">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -218,16 +223,16 @@
                                                     <div class="form-group col-md-12">
                                                         <label class="col-md-3 control-label">Select Images</label>
                                                         <div class="col-md-9">
-                                                            <input type="file" class="form-control" placeholder="Enter text">
+                                                            <input type="file" id="attachments" name="attachments[]" class="form-control" accept=".jpg, .png, .jpeg" placeholder="Enter text" multiple>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group col-md-12">
-
+                                                    <div class="form-group col-md-12 preview-attachments" >
+                                                        <table id="previewAttahs" style="margin-left: 100px; margin-bottom: 13px; width:100%"></table>
                                                     </div>
                                                     <div class="form-group col-md-12">
                                                         <label class="col-md-3 control-label">Video Url</label>
                                                         <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Enter text">
+                                                            <input type="text" class="form-control" placeholder="Enter Video Url" id="videoUrl" name="videoUrl">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -237,14 +242,14 @@
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                    <div class="form-group col-md-2">
+                                    <!---<div class="form-group col-md-2">
                                         <button type="submit" class="btn green">SAVE AS DRAFT</button>
-                                    </div>
+                                    </div>-->
                                     <div class="form-group col-md-1">
-                                        <button type="button" class="btn red">Post</button>
+                                        <button type="submit" class="btn red" id="postBtn" name="postBtn">Post</button>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <button type="button" class="btn default">Cancel</button>
+                                        <a href="/home" class="btn default" id="canCelBtn" name="cancelBtn">Cancel</a>
                                     </div>
                                 </div>
                             </div>
@@ -259,8 +264,70 @@
 </div>
 @section scripts {
     <script>
-        $.get("https://api.first.org/data/v1/countries", function (response) {
-            console.log(response);
+
+        $('#tags').tagsInput({
+            width: 'auto',
+            'onAddTag': function () {
+                //alert(1);
+            },
+        });
+
+        $(document).on("change", "#attachments", function (event) {
+            const files = event.target.files;
+            const trHtml = getFileListHtml(files);
+            $("#previewAttahs").html(trHtml);
+        });
+
+        $(document).on("click", "a.remoeAttachment", function () {
+
+            const index = $(this).data('index');
+            let fileBuffer = [];
+
+            filelistall = $('#attachments').prop("files");
+
+            Array.prototype.push.apply(fileBuffer, filelistall);
+            fileBuffer.splice(index, 1);
+            const dT = new ClipboardEvent('').clipboardData || new DataTransfer();
+            for (let file of fileBuffer) { dT.items.add(file); }
+            filelistall = $('#attachments').prop("files", dT.files);
+
+            $("#previewAttahs").html(getFileListHtml(dT.files));
+        });
+
+        function getFileListHtml(files) {
+            let trHtml = "";
+            for (let i = 0; i < files.length; i++) {
+                trHtml += `<tr>
+                            <td><a data-index="${i}" class="remoeAttachment" >X</a><td>
+                            <td>${files[i].name}<td>
+                           <tr>`;
+            }
+            return trHtml;
+        }
+
+        $(document).on("change", "select#country", function () {
+            const countryId = $(this).val();
+            const currency = $("#country option:selected").data("currency");
+
+            $("#region").html("<option value='0'>--Select Region--</option>");
+            $("#city").html("<option value='0'>--Select City--</option>");
+
+            $("#price").attr("placeholder", currency);
+
+            $.get(`/Post/GetStates/${countryId}`, function (res) {
+                $("#region").html(res);
+            });
+        });
+
+
+        $(document).on("change", "select#region", function () {
+            const regionId = $(this).val();
+
+            $("#city").html("<option value='0'>--Select City--</option>");
+
+            $.get(`/Post/GetCities/${regionId}`, function (res) {
+                $("#city").html(res);
+            });
         });
     </script>
 }

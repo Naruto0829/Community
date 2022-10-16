@@ -29,5 +29,15 @@ namespace Community.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<PostModel> Posts { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<State> States { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<AttachmentModel> Attachments { get; set; }
+        public DbSet<TagModel> Tags { get; set; }
+        public DbSet<TagPost> TagPost { get; set; }
+
     }
 }
