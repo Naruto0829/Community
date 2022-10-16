@@ -191,9 +191,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202210161949277_initialize.cs" />
-    <Compile Include="Migrations\202210161949277_initialize.Designer.cs">
-      <DependentUpon>202210161949277_initialize.cs</DependentUpon>
+    <Compile Include="Migrations\202210162153166_initialize.cs" />
+    <Compile Include="Migrations\202210162153166_initialize.Designer.cs">
+      <DependentUpon>202210162153166_initialize.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -234,7 +234,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -293,8 +295,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202210161949277_initialize.resx">
-      <DependentUpon>202210161949277_initialize.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202210162153166_initialize.resx">
+      <DependentUpon>202210162153166_initialize.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

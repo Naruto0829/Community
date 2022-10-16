@@ -148,7 +148,7 @@ namespace Community.Controllers
             string[] items = tags.Split(',');
             var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
 
-            dbContext.Database.ExecuteSqlCommand("DELETE FROM TagPost where postId = " + postId + "");
+            //dbContext.Database.ExecuteSqlCommand("DELETE FROM TagPost where postId = " + postId + "");
 
             if (tags != null && tags !="")
             {
@@ -166,7 +166,6 @@ namespace Community.Controllers
                         dbContext.Tags.Add(tagDB);
                         dbContext.SaveChanges();
                     }
-
 
                     isExistTag = dbContext.Tags.Where(q => q.Name == item).SingleOrDefault();
                     //tagPost.Tag_Id = isExistTag == null ? tagDB.Id : isExistTag.Id;

@@ -200,18 +200,18 @@ namespace Community.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
-            CreateTable(
-                "dbo.TagPosts",
-                c => new
-                    {
-                        Tag_Id = c.Int(nullable: false),
-                        Post_Id = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.Tag_Id, t.Post_Id })
-                .ForeignKey("dbo.Tags", t => t.Tag_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Posts", t => t.Post_Id, cascadeDelete: true)
-                .Index(t => t.Tag_Id)
-                .Index(t => t.Post_Id);
+            //CreateTable(
+            //    "dbo.TagPosts",
+            //    c => new
+            //        {
+            //            Tag_Id = c.Int(nullable: false),
+            //            Post_Id = c.Int(nullable: false),
+            //        })
+            //    .PrimaryKey(t => new { t.Tag_Id, t.Post_Id })
+            //    .ForeignKey("dbo.Tags", t => t.Tag_Id, cascadeDelete: true)
+            //    .ForeignKey("dbo.Posts", t => t.Post_Id, cascadeDelete: true)
+            //    .Index(t => t.Tag_Id)
+            //    .Index(t => t.Post_Id);
             
         }
         
@@ -237,7 +237,7 @@ namespace Community.Migrations
             DropIndex("dbo.ReplyAds", new[] { "PostId" });
             DropIndex("dbo.Posts", new[] { "CategoryId" });
             DropIndex("dbo.Attachments", new[] { "PostId" });
-            DropTable("dbo.TagPosts");
+            //DropTable("dbo.TagPosts");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
