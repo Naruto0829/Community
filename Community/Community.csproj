@@ -191,9 +191,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202210160631286_Post.cs" />
-    <Compile Include="Migrations\202210160631286_Post.Designer.cs">
-      <DependentUpon>202210160631286_Post.cs</DependentUpon>
+    <Compile Include="Migrations\202210161949277_initialize.cs" />
+    <Compile Include="Migrations\202210161949277_initialize.Designer.cs">
+      <DependentUpon>202210161949277_initialize.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -209,7 +209,6 @@
     <Compile Include="Models\ReplyAds.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\Tag.cs" />
-    <Compile Include="Models\TagPost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -294,8 +293,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202210160631286_Post.resx">
-      <DependentUpon>202210160631286_Post.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202210161949277_initialize.resx">
+      <DependentUpon>202210161949277_initialize.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

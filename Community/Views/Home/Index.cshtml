@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Community.Models.PostModelVm
+
+@{
     ViewBag.Title = "Community Activities Classfied Ads";
 }
 
@@ -96,38 +98,30 @@
                                 </div>
                             </div>
                             <div class="portlet-body">
-                                <div class="well">
-                                    <a href="/post/details/4"><h4 class="block" style="color: #1d96fd; font-weight: bold; display: inline-block; cursor:pointer">I am a default well</h4></a>
-                                    <span style="color: red">(7 days ago)</span>
-                                    <span style="margin-bottom: 5px; display: block; color: #a7a2a2"> Califonia | Community Activites</span>
-                                    <p style="margin-top: 10px;">
-                                        Tight pants next level keffiyeh trigger me on click haven't heard of them. Photo booth beard raw denim letterpress vegan messenger bag stumptown.
-                                    </p>
-                                </div>
-                                <div class="well">
-                                    <h4 class="block" style="color: #1d96fd; font-weight: bold; display: inline-block; cursor: pointer">I am a default well</h4>
-                                    <span style="color: red">(6 days ago)</span>
-                                    <span style="margin-bottom: 5px; display: block; color: #a7a2a2"> Califonia | Community Activites</span>
-                                    <p style="margin-top: 10px;">
-                                        Tight pants next level keffiyeh trigger me on click haven't heard of them. Photo booth beard raw denim letterpress vegan messenger bag stumptown.
-                                    </p>
-                                </div>
-                                <div class="well">
-                                    <h4 class="block" style="color: #1d96fd; font-weight: bold; display: inline-block; cursor: pointer">I am a default well</h4>
-                                    <span style="color: red">(2 days ago)</span>
-                                    <span style="margin-bottom: 5px; display: block; color: #a7a2a2"> Califonia | Community Activites</span>
-                                    <p style="margin-top: 10px;">
-                                        Tight pants next level keffiyeh trigger me on click haven't heard of them. Photo booth beard raw denim letterpress vegan messenger bag stumptown.
-                                    </p>
-                                </div>
-                                <div class="well">
-                                    <h4 class="block" style="color: #1d96fd; font-weight: bold; display: inline-block; cursor: pointer">I am a default well</h4>
-                                    <span style="color: red">(1 days ago)</span>
-                                    <span style="margin-bottom: 5px; display: block; color: #a7a2a2"> Califonia | Community Activites</span>
-                                    <p style="margin-top: 10px;">
-                                        Tight pants next level keffiyeh trigger me on click haven't heard of them. Photo booth beard raw denim letterpress vegan messenger bag stumptown.
-                                    </p>
-                                </div>
+                                @foreach (var item in Model.posts)
+                                {
+                                    <div class="well">
+                                        <a href="/post/details/4"><h4 class="block" style="color: #1d96fd; font-weight: bold; display: inline-block; cursor:pointer">@item.Title</h4></a>
+                                        <span style="color: red">(7 days ago)</span>
+                                        <span style="margin-bottom: 5px; display: block; color: #a7a2a2">
+                                            <ul class="list-inline blog-tags">
+                                                <li>
+                                                    <i class="fa fa-tags"></i>
+                                                    @foreach (var tagItem in @item.Tags)
+                                                    {
+                                                        <a href="javascript:;">
+                                                            @tagItem.Name
+                                                        </a>
+                                                    }
+                                                </li>
+                                            </ul>
+                                        </span>
+                                        <p style="margin-top: 10px;">
+                                            @item.Description
+                                        </p>
+                                    </div>
+                                }
+
                             </div>
                         </div>
                     </div>

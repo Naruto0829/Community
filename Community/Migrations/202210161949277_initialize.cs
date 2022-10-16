@@ -3,7 +3,7 @@ namespace Community.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Post : DbMigration
+    public partial class initialize : DbMigration
     {
         public override void Up()
         {
@@ -42,6 +42,7 @@ namespace Community.Migrations
                         PostalCode = c.String(),
                         VideoUrl = c.String(),
                         Status = c.Int(nullable: false),
+                        created_at = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Categories", t => t.CategoryId, cascadeDelete: true)
@@ -71,20 +72,6 @@ namespace Community.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Posts", t => t.PostId, cascadeDelete: true)
-                .Index(t => t.PostId);
-            
-            CreateTable(
-                "dbo.TagPosts",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        TagId = c.Int(nullable: false),
-                        PostId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Posts", t => t.PostId, cascadeDelete: true)
-                .ForeignKey("dbo.Tags", t => t.TagId, cascadeDelete: true)
-                .Index(t => t.TagId)
                 .Index(t => t.PostId);
             
             CreateTable(
@@ -213,6 +200,19 @@ namespace Community.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
+            CreateTable(
+                "dbo.TagPosts",
+                c => new
+                    {
+                        Tag_Id = c.Int(nullable: false),
+                        Post_Id = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.Tag_Id, t.Post_Id })
+                .ForeignKey("dbo.Tags", t => t.Tag_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Posts", t => t.Post_Id, cascadeDelete: true)
+                .Index(t => t.Tag_Id)
+                .Index(t => t.Post_Id);
+            
         }
         
         public override void Down()
@@ -221,22 +221,23 @@ namespace Community.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.TagPosts", "TagId", "dbo.Tags");
-            DropForeignKey("dbo.TagPosts", "PostId", "dbo.Posts");
+            DropForeignKey("dbo.TagPosts", "Post_Id", "dbo.Posts");
+            DropForeignKey("dbo.TagPosts", "Tag_Id", "dbo.Tags");
             DropForeignKey("dbo.ReplyAds", "PostId", "dbo.Posts");
             DropForeignKey("dbo.Attachments", "PostId", "dbo.Posts");
             DropForeignKey("dbo.Posts", "CategoryId", "dbo.Categories");
+            DropIndex("dbo.TagPosts", new[] { "Post_Id" });
+            DropIndex("dbo.TagPosts", new[] { "Tag_Id" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.TagPosts", new[] { "PostId" });
-            DropIndex("dbo.TagPosts", new[] { "TagId" });
             DropIndex("dbo.ReplyAds", new[] { "PostId" });
             DropIndex("dbo.Posts", new[] { "CategoryId" });
             DropIndex("dbo.Attachments", new[] { "PostId" });
+            DropTable("dbo.TagPosts");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
@@ -246,7 +247,6 @@ namespace Community.Migrations
             DropTable("dbo.Countries");
             DropTable("dbo.Cities");
             DropTable("dbo.Tags");
-            DropTable("dbo.TagPosts");
             DropTable("dbo.ReplyAds");
             DropTable("dbo.Categories");
             DropTable("dbo.Posts");

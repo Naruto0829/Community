@@ -1,5 +1,4 @@
-﻿using Community.Models;
-using Microsoft.AspNet.Identity.Owin;
+﻿using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.IO;
+using Community.Models;
 
 namespace Community.Controllers
 {
@@ -127,6 +127,7 @@ namespace Community.Controllers
             pm.Address = collection.Get("streeAddress");
             pm.PostalCode = collection.Get("postalCode");
             pm.VideoUrl = collection.Get("videoUrl");
+            pm.created_at = DateTime.UtcNow;
             pm.Status = 0;      //0: pending, 1: success
             dbContext.Posts.Add(pm);
             dbContext.SaveChanges();
@@ -147,14 +148,15 @@ namespace Community.Controllers
             string[] items = tags.Split(',');
             var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
 
-            dbContext.Database.ExecuteSqlCommand("DELETE FROM TagPosts where postId = " + postId + "");
+            dbContext.Database.ExecuteSqlCommand("DELETE FROM TagPost where postId = " + postId + "");
 
             if (tags != null && tags !="")
             {
                 foreach (var item in items)
                 {
                     Tag tagDB = new Tag();
-                    TagPost tagPost = new TagPost();
+
+                    //TagPost tagPost = new TagPost();
 
                     var isExistTag = dbContext.Tags.Where(q => q.Name == item).SingleOrDefault();
 
@@ -165,10 +167,13 @@ namespace Community.Controllers
                         dbContext.SaveChanges();
                     }
 
-                    tagPost.TagId = isExistTag == null ? tagDB.Id : isExistTag.Id;
-                    tagPost.PostId = postId;
-                    dbContext.TagPost.Add(tagPost);
-                    dbContext.SaveChanges();
+
+                    isExistTag = dbContext.Tags.Where(q => q.Name == item).SingleOrDefault();
+                    //tagPost.Tag_Id = isExistTag == null ? tagDB.Id : isExistTag.Id;
+                    //tagPost.Post_Id = postId;
+                    //dbContext.TagPost.Add(tagPost);
+                    //dbContext.SaveChanges();
+                   
                 }
             }
         }

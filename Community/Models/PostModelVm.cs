@@ -11,5 +11,6 @@ namespace Community.Models
         public List<Country> countries;
         public List<State> states;
         public List<City> cities;
+        public List<Post> posts;
     }
 }

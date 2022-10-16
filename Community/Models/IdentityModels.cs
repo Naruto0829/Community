@@ -37,7 +37,5 @@ namespace Community.Models
         public DbSet<City> Cities { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<Tag> Tags { get; set; }
-        public DbSet<TagPost> TagPost { get; set; }
-
     }
 }

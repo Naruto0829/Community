@@ -9,6 +9,6 @@ namespace Community.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<TagPost> TagPosts { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
     }
 }

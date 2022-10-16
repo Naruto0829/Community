@@ -24,9 +24,10 @@ namespace Community.Models
         public string PostalCode { get; set; }
         public string VideoUrl { get; set; }
         public int Status { get; set; }
+        public DateTime? created_at { get; set; }
 
         public virtual ICollection<Attachment> Images { get; set; }
-        public virtual ICollection<TagPost> TagPosts { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
         public virtual ICollection<ReplyAds> ReplyAdses { get; set; }
         public virtual Category Category { get; set; }
     }
