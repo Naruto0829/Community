@@ -12,5 +12,6 @@ namespace Community.Models
         public int ParentID { get; set; }
         public int Level { get; set; }
         public int TopLevelParent { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
     }
 }

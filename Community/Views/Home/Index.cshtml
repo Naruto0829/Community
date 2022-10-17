@@ -3,7 +3,14 @@
 @{
     ViewBag.Title = "Community Activities Classfied Ads";
 }
-
+<style>
+    ul.blog-tags a {
+        background: #eee;
+        padding: 1px 4px;
+        margin: 0 4px 4px 0;
+        display: inline-block;
+    }
+</style>
 <div class="container">
     <!-- BEGIN PAGE BREADCRUMB -->
     <ul class="page-breadcrumb breadcrumb">
@@ -36,49 +43,33 @@
                                 </div>
                             </div>
                             <div class="portlet-body">
-                                <ul class="nav nav-pills nav-stacked p-2">
-                                    <li>Unite State</li>
+                                <ul class="nav nav-pills nav-stacked p-6" style="padding: 12px">
+                                    <li><b>Country</b>: @Model.countryName</li>
+                                    <li><b>Region </b>: @Model.regionName</li>
+                                    <li><a>Change Location</a></li>
                                 </ul>
                                 <div class="clearfix margin-bottom-10">
                                 </div>
-                                <ul class="nav nav-pills nav-stacked" style="max-width: 260px;">
-                                    <li class="active">
+                                <ul class="nav nav-pills nav-stacked" style="max-width: 300px; max-height: 48vh; overflow-y: scroll; width: 300px;" id="category">
+                                    <li class="active" data-id="0">
                                         <a href="javascript:;">
                                             <span class="badge badge-warning pull-right">
-                                                42
+                                                @Model.posts.ToList().Count()
                                             </span>
-                                            Category
+                                            All Category
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            Book
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="badge badge-success pull-right">
-                                                3
-                                            </span>
-                                            Car
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="badge badge-success pull-right">
-                                                3
-                                            </span>
-                                            Test
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="badge badge-success pull-right">
-                                                3
-                                            </span>
-                                            Test1
-                                        </a>
-                                    </li>
+                                    @foreach (var item in Model.categories)
+                                    {
+                                        <li data-id="@item.Id">
+                                            <a href="javascript:;">
+                                                <span class="badge badge-success pull-right">
+                                                    @Model.posts.Where(q => q.CategoryId == @item.Id).Count()
+                                                </span>
+                                                @item.Name
+                                            </a>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
                         </div>
@@ -89,39 +80,16 @@
                                 <div class="caption">
                                 </div>
                                 <div class="actions">
-                                    <select class="form-control">
-                                        <option>Newest First</option>
-                                        <option>Oldest First</option>
-                                        <option>By Title (A to Z)</option>
-                                        <option>By Title (Z to A)</option>
+                                    <select class="form-control" id="filter" name="filter">
+                                        <option value="newest">Newest First</option>
+                                        <option value="oldest">Oldest First</option>
+                                        <option value="asc" >By Title (A to Z)</option>
+                                        <option value="desc">By Title (Z to A)</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="portlet-body">
-                                @foreach (var item in Model.posts)
-                                {
-                                    <div class="well">
-                                        <a href="/post/details/4"><h4 class="block" style="color: #1d96fd; font-weight: bold; display: inline-block; cursor:pointer">@item.Title</h4></a>
-                                        <span style="color: red">(7 days ago)</span>
-                                        <span style="margin-bottom: 5px; display: block; color: #a7a2a2">
-                                            <ul class="list-inline blog-tags">
-                                                <li>
-                                                    <i class="fa fa-tags"></i>
-                                                    @foreach (var tagItem in @item.Tags)
-                                                    {
-                                                        <a href="javascript:;">
-                                                            @tagItem.Name
-                                                        </a>
-                                                    }
-                                                </li>
-                                            </ul>
-                                        </span>
-                                        <p style="margin-top: 10px;">
-                                            @item.Description
-                                        </p>
-                                    </div>
-                                }
-
+                            <div class="portlet-body" id="postListPanel">
+                                @Html.Partial("postComponents");
                             </div>
                         </div>
                     </div>
@@ -132,3 +100,27 @@
     </div>
     <!-- END PAGE CONTENT INNER -->
 </div>
+@section scripts {
+    <script>
+
+        $(document).on('change', "select#filter", function () {
+            var filterName = $("select#filter").val();
+            var category = $("#category").children("li.active").data("id");
+            getPosts(filterName, category);
+        });
+
+        $(document).on('click', "#category > li", function () {
+            $(this).parent().children("li").removeClass("active");
+            $(this).addClass("active");
+            var filterName = $("select#filter").val();
+            var category = $("#category").children("li.active").data("id");
+            getPosts(filterName, category);
+        });
+
+        function getPosts(filterName, category) {
+            $.get(`Home/filter?filterName=${filterName}&category_id=${category}`, function (res) {
+                $("#postListPanel").html(res);
+            });
+        }
+    </script>
+}

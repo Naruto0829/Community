@@ -8,7 +8,7 @@ namespace Community.Models
     public class Post
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int AdType { get; set; }
         public int AdvertiserType { get; set; }
         public DateTime ExpireTime { get; set; }

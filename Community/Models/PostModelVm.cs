@@ -12,5 +12,7 @@ namespace Community.Models
         public List<State> states;
         public List<City> cities;
         public List<Post> posts;
+        public string countryName;
+        public string regionName;
     }
 }

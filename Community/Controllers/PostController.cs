@@ -18,7 +18,8 @@ namespace Community.Controllers
         {
             var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
             var countries = dbContext.Countries.ToList();
-            var states = dbContext.States.ToList();
+            var states    = dbContext.States.ToList();
+            var tags      = dbContext.Tags.ToList();
 
             var categories = dbContext.Database.SqlQuery<CategoryVM>(@"WITH RCTE AS 
                             (
@@ -41,6 +42,8 @@ namespace Community.Controllers
                             FROM RCTE r
                             ORDER BY TopLevelParent;").ToList();
 
+            ViewBag.tags = this.BeautifyTags(tags);
+
             PostModelVm postvm = new PostModelVm();
             postvm.categories = categories;
             postvm.countries = countries;
@@ -49,9 +52,23 @@ namespace Community.Controllers
             return View(postvm);
         }
 
+        public string BeautifyTags(List<Tag> tags)
+        {
+            string[] newTags = new string[tags.Count()];
+            var i = 0;
+            foreach(var item in tags)
+            {
+                newTags.SetValue(item.Name, i);
+                i++;
+            }
+
+            return string.Join(",",  newTags);
+        }
+
         // GET: Post/Details/5
         public ActionResult Details(int id)
         {
+
             return View();
         }
 
@@ -109,7 +126,7 @@ namespace Community.Controllers
         public ActionResult Save( FormCollection collection)
         {
             var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
-            int userId = 1; /*User.Identity.GetUserId<int>();*/
+            string userId = HttpContext.User.Identity.GetUserId();
 
             Post pm = new Post();
             pm.UserId = userId;
@@ -148,17 +165,17 @@ namespace Community.Controllers
             string[] items = tags.Split(',');
             var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
 
-            //dbContext.Database.ExecuteSqlCommand("DELETE FROM TagPost where postId = " + postId + "");
+            dbContext.Database.ExecuteSqlCommand("DELETE FROM TagPosts where Post_Id = " + postId + "");
 
             if (tags != null && tags !="")
             {
+
+
                 foreach (var item in items)
                 {
                     Tag tagDB = new Tag();
-
-                    //TagPost tagPost = new TagPost();
-
                     var isExistTag = dbContext.Tags.Where(q => q.Name == item).SingleOrDefault();
+                    int tag_id = 0;
 
                     if (isExistTag == null)
                     {
@@ -167,12 +184,13 @@ namespace Community.Controllers
                         dbContext.SaveChanges();
                     }
 
+                    int i = isExistTag == null ? tagDB.Id : isExistTag.Id;
+
                     isExistTag = dbContext.Tags.Where(q => q.Name == item).SingleOrDefault();
-                    //tagPost.Tag_Id = isExistTag == null ? tagDB.Id : isExistTag.Id;
-                    //tagPost.Post_Id = postId;
-                    //dbContext.TagPost.Add(tagPost);
-                    //dbContext.SaveChanges();
-                   
+
+                    tag_id = isExistTag == null ? tagDB.Id : isExistTag.Id;
+                    dbContext.Database.ExecuteSqlCommand("INSERT INTO TagPosts (Tag_id, Post_id) VALUES(" + tag_id + ", " + postId + ")");
+                    dbContext.SaveChanges();
                 }
             }
         }

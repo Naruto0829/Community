@@ -8,8 +8,6 @@ namespace Community.Models
 {
     public class State
     {
-        internal string id;
-
         [Key]
         public long Id { get; set; }
         public string Name { get; set; }

@@ -260,8 +260,11 @@
 @section scripts {
     <script src="~/assets/page/scripts/post.js"></script>
     <script>
+
+        var tags = "@ViewBag.tags";
+
         $("#tags").select2({
-            tags: ["Testing", "Important", "Info", "Pending", "Completed", "Requested", "Approved"]
+            tags: tags.split(',')
         });
 
 

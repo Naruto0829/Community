@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.IO;
 using Community.Models;
+using System.Globalization;
 
 namespace Community.Controllers
 {
@@ -14,11 +15,14 @@ namespace Community.Controllers
     {
         public ActionResult Index()
         {
-            var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
 
+            string countryName = RegionInfo.CurrentRegion.DisplayName;
+            string regionName  = RegionInfo.CurrentRegion.ThreeLetterWindowsRegionName;
+
+            var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+            
             var countries = dbContext.Countries.ToList();
-            var states = dbContext.States.ToList();
-            var posts = dbContext.Posts.ToList();
+            var states    = dbContext.States.ToList();
 
             var categories = dbContext.Database.SqlQuery<CategoryVM>(@"WITH RCTE AS 
                             (
@@ -31,7 +35,7 @@ namespace Community.Controllers
                                 FROM dbo.Categories c
                                 INNER JOIN RCTE r ON c.ParentId = r.Id
                             )
-                            SELECT 
+                            SELECT
                               r.Id, 
                               r.Name as Name,
                               r.ParentId,
@@ -42,13 +46,68 @@ namespace Community.Controllers
                             ORDER BY TopLevelParent;").ToList();
 
             PostModelVm postvm = new PostModelVm();
-            postvm.categories = categories;
-            postvm.countries = countries;
-            postvm.states = states;
-            postvm.posts = posts;
+
+            postvm.categories  = categories;
+            postvm.countries   = countries;
+            postvm.states      = states;
+            postvm.posts       = this.Search(countryName, regionName);
+            postvm.countryName = countryName;
+            postvm.regionName  = regionName;
 
             return View(postvm);
         }
+
+        public ActionResult filter(string filterName, int category_id)
+        {
+            var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+
+            var posts = dbContext.Posts.Where(q => q.Status == 1);
+
+            if (category_id != 0)
+            {
+                posts = posts.Where(q => q.CategoryId == category_id);
+            }
+
+            if (filterName == "newest")
+            {
+                posts = posts.OrderByDescending(q => q.created_at);
+            }
+            else if (filterName == "oldest")
+            {
+                posts = posts.OrderBy(q => q.created_at);
+            }
+            else if (filterName == "asc")
+            {
+                posts = posts.OrderBy(q => q.Title);
+            }
+            else if (filterName == "desc")
+            {
+                posts = posts.OrderByDescending(q => q.Title);
+            }
+
+            PostModelVm pvm = new PostModelVm();
+            pvm.posts = posts.ToList();
+
+            return PartialView("postComponents", pvm);
+        }
+
+        public List<Post> Search(string countryName, string regionName)
+        {
+            //string sCountry = Session["country"].ToString();
+            //string sRegion  = Session["region"].ToString();
+            //string sCity    = Session["city"].ToString();
+
+            var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+
+            //var country = dbContext.Countries.Where(q => q.Name == countryName).SingleOrDefault();
+            //var region  = dbContext.States.Where(q => q.CountryId == country.Id && q.Name == regionName).SingleOrDefault();
+            //var city    = dbContext.Cities.Where(q => q.StateId == region.Id && )
+            var posts   = dbContext.Posts.Where(q => q.Status == 1).OrderByDescending(c => c.created_at).ToList();
+
+            return posts;
+        }
+
+
 
         public ActionResult About()
         {
