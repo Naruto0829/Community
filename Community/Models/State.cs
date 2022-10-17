@@ -15,7 +15,7 @@ namespace Community.Models
         public decimal? latitude { get; set; }
         public decimal? longitude { get; set; }
         public long? CountryId { get; set; }
-
+        public virtual Post Post { get; set; }
         //public Country Country { get; set; }
         //public virtual ICollection<City> Cities { get; set; }
     }

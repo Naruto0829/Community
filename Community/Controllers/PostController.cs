@@ -69,7 +69,14 @@ namespace Community.Controllers
         public ActionResult Details(int id)
         {
 
-            return View();
+            var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+            var post = dbContext.Posts.Where(q => q.Status == 1 && q.Id == id).SingleOrDefault();
+            var country = dbContext.Countries.Where(q => q.Id == post.CountryId).SingleOrDefault();
+            PostModelVm pvm = new PostModelVm();
+
+            pvm.post = post;
+            pvm.countryName = country.Name;
+            return View(pvm);
         }
 
         [HttpGet]

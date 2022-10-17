@@ -1,3 +1,4 @@
+@model Community.Models.PostModelVm
 @{
     ViewBag.Title = "Post Ads Detail";
 }
@@ -52,7 +53,7 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="row col-md-12">
-                            <h1 style="margin-top: 0px">TRUCOS ESPECIALES ALEXA</h1>
+                            <h1 style="margin-top: 0px">@Model.post.Title</h1>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3">
@@ -63,38 +64,37 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="control-label col-md-7">Location: </label>
-                                <span>Califonia</span>
+                                <span>@Model.countryName</span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="control-label col-md-7">Posted by: </label>
-                                <span>Elasiva</span>
+                                <span>@Model.userManager.Users.Where(q => q.Id == Model.post.UserId).SingleOrDefault().UserName</span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="control-label col-md-7">Posted on: </label>
-                                <span>Oct 4, 2022</span>
+                                <span>@Model.post.created_at.ToString("dddd, dd MMMM yyyy")</span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="control-label col-md-7">Ad Type: </label>
-                                <span>Offered</span>
+                                <span>
+                                    @{ string adType = Model.post.AdType == 0 ? "Offered" : "Wanted"; }  
+                                    @adType
+                                </span>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label>Description</label>
                                 <div class="well">
-                                    You can download and use all amCharts products for free. The only limitation of the free version is that a small link to this web site will be displayed in the top left corner of your charts. If you would like to use charts without this link, or you appreciate the software and would like to support its creators, please purchase a commercial license.
-
-                                    EXCLUSIVELY FOR METRONIC USERS:  After purchasing Metronic you will get a promo code for 15% DISCOUNT for commercial license of amChart. To find the promo code please check the readme.txt file in the Metronic's purchased package.
-
-                                    For more info please chech the plugin's official demos & documentation http://www.amcharts.com/demos/
+                                    @Model.post.Description
                                 </div>
                             </div>
                         </div>

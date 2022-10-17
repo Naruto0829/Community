@@ -28,6 +28,7 @@ namespace Community.Models
         public int? Flag { get; set; }
         public string WikiDataId { get; set; }
 
+        public virtual Post Post { get; set; }
         //public virtual ICollection<City> Cities { get; set; }
         //public virtual ICollection<State> States { get; set; }
     }

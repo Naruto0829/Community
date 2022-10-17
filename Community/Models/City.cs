@@ -13,6 +13,7 @@ namespace Community.Models
         public string Name { get; set; }
         public long? CountryId { get; set; }
         public long? StateId { get; set; }
+        public virtual Post Post { get; set; }
         //public Country Country { get; set; }
         //public State State { get; set; }
     }

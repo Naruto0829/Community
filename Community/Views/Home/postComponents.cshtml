@@ -4,7 +4,7 @@
 {
     <div class="well">
         <a href="/post/details/@item.Id"><h4 class="block" style="color: #1d96fd; font-weight: bold; display: inline-block; cursor:pointer">@item.Title</h4></a>
-        <span style="color: red">(7 days ago)</span>
+        <span style="color: red">(@Model.GetDelayTime(item.created_at))</span>
         <span style="margin-bottom: 5px; display: block; color: #a7a2a2"></span>
         <ul class="list-inline blog-tags">
             <li>

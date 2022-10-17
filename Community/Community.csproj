@@ -203,6 +203,10 @@
     <Compile Include="Migrations\202210170341219_updatePostUserId.Designer.cs">
       <DependentUpon>202210170341219_updatePostUserId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202210171200122_PostCreatedAtUPdate.cs" />
+    <Compile Include="Migrations\202210171200122_PostCreatedAtUPdate.Designer.cs">
+      <DependentUpon>202210171200122_PostCreatedAtUPdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Attachment.cs" />
@@ -311,6 +315,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202210170341219_updatePostUserId.resx">
       <DependentUpon>202210170341219_updatePostUserId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210171200122_PostCreatedAtUPdate.resx">
+      <DependentUpon>202210171200122_PostCreatedAtUPdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

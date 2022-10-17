@@ -107,7 +107,10 @@ namespace Community.Controllers
             return posts;
         }
 
+        public void HandleExpireTime()
+        {
 
+        }
 
         public ActionResult About()
         {
