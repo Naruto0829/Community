@@ -11,7 +11,7 @@ using Community.Models;
 namespace Community.Controllers
 {
     [Authorize]
-    public class AdminController : Controller
+    public class AdminManageController : Controller
     {
         // GET: Admin
         public ActionResult Post()

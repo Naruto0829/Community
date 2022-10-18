@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Ads Management";
+    ViewBag.Page  = "PostMng";
 }
 
 
@@ -67,7 +68,7 @@
     <script>
         $(document).on('change', "select#filter", function () {
             var filterName = $("select#filter").val();
-            $.get(`/Admin/PostFilter?filterName=${filterName}`, function (res) {
+            $.get(`/AdminManage/PostFilter?filterName=${filterName}`, function (res) {
                 $("#postTbl tbody").html(res);
             });
         });
@@ -78,7 +79,7 @@
 
             bootbox.confirm("Are you sure?",(res) => {
                 if (res) {
-                    $.post("/Admin/updateStatus", { postId, status }, function (res) {
+                    $.post("/AdminManage/updateStatus", { postId, status }, function (res) {
                         bootbox.alert(res);
                         if (status == 0) {
                             $("tr#" + postId).find(".post-status").removeClass("label-success");

@@ -2,8 +2,8 @@
 
 <div class="container">
     <!-- BEGIN LOGO -->
-    <div class="page-logo">
-        Community
+    <div class="page-logo" style="font-size: 28px;">
+        <a href="/">Sanjay Community</a>
     </div>
     <!-- END LOGO -->
     <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -17,7 +17,7 @@
             <li class="dropdown dropdown-user dropdown-dark">
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                     <img alt="" class="img-circle" src="~/assets/admin/layout3/img/avatar9.jpg">
-                    <span class="username username-hide-mobile">Nick</span>
+                    <span class="username username-hide-mobile">Sanjay</span>
                 </a>
                 @if (Request.IsAuthenticated)
                 {
@@ -31,7 +31,7 @@
                             <li class="divider">
                             </li>
                             <li>
-                                <form id="logoutForm" method="post" action="Account/LogOff" style="display: none">
+                                <form id="logoutForm" method="post" action="/Account/LogOff" style="display: none">
                                     @Html.AntiForgeryToken()
                                 </form>
                                 <a href="javascript:document.getElementById('logoutForm').submit()"><i class="icon-key"></i>Log off</a>

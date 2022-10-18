@@ -20,8 +20,23 @@
                 <td>@i</td>
                 <td style="text-indent: @intent.ToString()px !important">@item.Name</td>
                 <td>
-                    <button onclick="onEdit(@item.Id, @item.ParentID, '@item.Name')">edit</button>
-                    <button onclick="onDelete(@item.Id)">delete</button>
+                    <div class="task-config-btn btn-group">
+                        <a class="btn btn-xs default" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="fa fa-cog"></i><i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="javascript:;" id="pending" onclick="onEdit(@item.Id, @item.ParentID, '@item.Name')">
+                                    <i class="fa fa-pencil"></i> edit
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" id="approve" onclick="onDelete(@item.Id)">
+                                    <i class="fa fa-trash"></i>delete
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
 

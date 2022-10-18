@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace Community.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         // GET: Category
