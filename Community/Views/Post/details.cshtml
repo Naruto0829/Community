@@ -1,4 +1,5 @@
 @model Community.Models.PostModelVm
+@using Community.Helpers;
 @{
     ViewBag.Title = "Post Ads Detail";
     ViewBag.page = "Home";
@@ -101,17 +102,7 @@
 
                             <div class="carousel slide multi-item-carousel" id="theCarousel">
                                 <div class="carousel-inner">
-                                    @{ int i = 0;}
-                                    @foreach (var item in Model.posts)
-                                    {
-                                        <div class="item active">
-                                            <div class="col-xs-4">
-                                                <a href="/post/details/@item.Id">
-                                                    <img src="@item.Images.First().FilePath" class="img-responsive">
-                                                </a>
-                                            </div>
-                                        </div>
-                                    }
+                                    @Html.Raw(@PostHelper.CarouselHtml(Model.posts))
                                 </div>
                                 <a class="left carousel-control" href="#theCarousel" data-slide="prev" style="width: 0px;"><i class="glyphicon glyphicon-chevron-left"></i></a>
                                 <a class="right carousel-control" href="#theCarousel" data-slide="next" style="width: 0px;"><i class="glyphicon glyphicon-chevron-right"></i></a>

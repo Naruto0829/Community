@@ -15,24 +15,30 @@
 	<!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
 	<div class="hor-menu ">
         <ul class="nav navbar-nav">
-            @{ 
+            @{
                 string HomeActive = ViewBag.page == "Home" ? "active" : "";
                 string PostActive = ViewBag.page == "Post" ? "active" : "";
                 string CategoryActive = ViewBag.page == "CategoryMng" ? "active" : "";
                 string PostMngActive = ViewBag.page == "PostMng" ? "active" : "";
             }
+
             <li class="@HomeActive">
                 <a href="/home">Home</a>
             </li>
             <li class="@PostActive">
                 <a href="/post">Post a Free Ads</a>
             </li>
-            <li class="@CategoryActive">
-                <a href="/category">Category Management</a>
-            </li>
-            <li class="@PostMngActive">
-                <a href="/adminManage/post">Ads Management</a>
-            </li>
+            
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="@CategoryActive">
+                    <a href="/category">Category Management</a>
+                </li>
+                <li class="@PostMngActive">
+                    <a href="/adminManage/post">Ads Management</a>
+                </li>
+            }
+
         </ul>
 	</div>
 	<!-- END MEGA MENU -->

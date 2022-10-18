@@ -10,7 +10,7 @@ using Community.Models;
 
 namespace Community.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AdminManageController : Controller
     {
         // GET: Admin

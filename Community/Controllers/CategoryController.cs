@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace Community.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         // GET: Category
