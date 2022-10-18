@@ -72,9 +72,11 @@ namespace Community.Controllers
             var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
             var post = dbContext.Posts.Where(q => q.Status == 1 && q.Id == id).SingleOrDefault();
             var country = dbContext.Countries.Where(q => q.Id == post.CountryId).SingleOrDefault();
+            var refPost = dbContext.Posts.Where(q => q.Status == 1 && q.Id !=id).ToList();
             PostModelVm pvm = new PostModelVm();
 
-            pvm.post = post;
+            pvm.post  = post;
+            pvm.posts = refPost;
             pvm.countryName = country.Name;
             return View(pvm);
         }
@@ -222,7 +224,7 @@ namespace Community.Controllers
                         {
                             path = Path.Combine(Server.MapPath("~/assets/uploads/"), random + Path.GetFileName(fileCollection[i].FileName));
                             fileCollection[i].SaveAs(path);
-                            path = "~/assets/uploads/" + random + Path.GetFileName(fileCollection[i].FileName);
+                            path = "../../assets/uploads/" + random + Path.GetFileName(fileCollection[i].FileName);
                             
                             //Store images by postId
 

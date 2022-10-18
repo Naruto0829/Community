@@ -1,0 +1,98 @@
+@model Community.Models.PostModelVm
+
+@{
+    ViewBag.Title = "Ads Management";
+}
+
+
+<div class="container">
+    <!-- BEGIN PAGE BREADCRUMB -->
+    <ul class="page-breadcrumb breadcrumb">
+        <li>
+            <a href="#">Ads</a><i class="fa fa-circle"></i>
+        </li>
+        <li class="active">
+            index
+        </li>
+    </ul>
+    <!-- END PAGE BREADCRUMB -->
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row margin-top-10">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">ADS</span>
+                        <span class="caption-helper hide">weekly stats...</span>
+                    </div>
+
+                </div>
+                <div class="action">
+                    <select class="form-control" id="filter" name="filter">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="asc">By Title (A to Z)</option>
+                        <option value="desc">By Title (Z to A)</option>
+                    </select>
+                </div>
+                <div class="portlet-body form clearfix">
+
+                    <table class="table" id="postTbl">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>User</th>
+                                <th>Images</th>
+                                <th>Posted Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @Html.Partial("postComponents")
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+</div>
+@section scripts {
+    <script>
+        $(document).on('change', "select#filter", function () {
+            var filterName = $("select#filter").val();
+            $.get(`/Admin/PostFilter?filterName=${filterName}`, function (res) {
+                $("#postTbl tbody").html(res);
+            });
+        });
+
+        $(document).on("click", "#pending, #approve", function () {
+            const postId = $(this).attr("data-postId");
+            const status = $(this).attr("data-status");
+
+            bootbox.confirm("Are you sure?",(res) => {
+                if (res) {
+                    $.post("/Admin/updateStatus", { postId, status }, function (res) {
+                        bootbox.alert(res);
+                        if (status == 0) {
+                            $("tr#" + postId).find(".post-status").removeClass("label-success");
+                            $("tr#" + postId).find(".post-status").addClass("label-info");
+                            $("tr#" + postId).find(".post-status").text("Pending");
+                        } else {
+                            $("tr#" + postId).find(".post-status").removeClass("label-info");
+                            $("tr#" + postId).find(".post-status").addClass("label-success");
+                            $("tr#" + postId).find(".post-status").text("Approved");
+                        }
+                    });
+                }
+            })
+            
+        });
+    </script>
+}

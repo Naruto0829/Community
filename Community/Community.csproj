@@ -181,6 +181,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AttachmentController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -206,6 +207,10 @@
     <Compile Include="Migrations\202210171200122_PostCreatedAtUPdate.cs" />
     <Compile Include="Migrations\202210171200122_PostCreatedAtUPdate.Designer.cs">
       <DependentUpon>202210171200122_PostCreatedAtUPdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202210171331549_UpdatePost.cs" />
+    <Compile Include="Migrations\202210171331549_UpdatePost.Designer.cs">
+      <DependentUpon>202210171331549_UpdatePost.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -289,6 +294,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Admin\" />
     <Folder Include="Views\Attachment\" />
     <Folder Include="Views\Location\" />
     <Folder Include="Views\Shared\App_LocalResources\" />
@@ -318,6 +324,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202210171200122_PostCreatedAtUPdate.resx">
       <DependentUpon>202210171200122_PostCreatedAtUPdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210171331549_UpdatePost.resx">
+      <DependentUpon>202210171331549_UpdatePost.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

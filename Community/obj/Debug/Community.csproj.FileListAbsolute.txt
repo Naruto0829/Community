@@ -117,3 +117,4 @@ D:\Work\Community\Community\obj\Debug\Community.csproj.GenerateResource.cache
 D:\Work\Community\Community\obj\Debug\Community.Migrations.updateforiegnkey.resources
 D:\Work\Community\Community\obj\Debug\Community.Migrations.updatePostUserId.resources
 D:\Work\Community\Community\obj\Debug\Community.Migrations.PostCreatedAtUPdate.resources
+D:\Work\Community\Community\obj\Debug\Community.Migrations.UpdatePost.resources

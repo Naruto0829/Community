@@ -1,0 +1,56 @@
+@model Community.Models.PostModelVm
+
+@{ int i = 0; }
+@foreach (var item in Model.posts)
+{
+    i++;
+    <tr id="@item.Id">
+        <td>@i</td>
+        <td>@item.Title</td>
+        <td>@Html.Raw(@item.Description)</td>
+        <td>@item.User.UserName</td>
+        <td style="display:flex">
+            @foreach (var img in item.Images)
+            {
+                <img src="@img.FilePath" style="width:70px" />
+            }
+        </td>
+        <td>
+            @item.created_at.ToString("dddd, dd MMMM yyyy")
+        </td>
+        <td>
+            @if (item.Status == 0)
+            {
+                <span class="label label-sm label-info post-status">
+                    Pending
+                </span>
+            }
+            else if (item.Status == 1)
+            {
+                <span class="label label-sm label-success label-mini post-status">
+                    Approved
+                </span>
+            }
+        </td>
+        <td>
+            <div class="task-config-btn btn-group">
+                <a class="btn btn-xs default" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <i class="fa fa-cog"></i><i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a href="javascript:;" id="pending" data-postId="@item.Id" data-status="0">
+                            <i class="fa fa-pencil"></i> Pending
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" id="approve" data-postId="@item.Id" data-status="1">
+                            <i class="fa fa-check"></i>Approve
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+}
+               

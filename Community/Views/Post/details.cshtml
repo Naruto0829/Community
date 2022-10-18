@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Post Ads Detail";
 }
-
+<link href="~/assets/page/css/carousel.less" />
 <div class="container">
     <!-- BEGIN PAGE BREADCRUMB -->
     <ul class="page-breadcrumb breadcrumb">
@@ -29,25 +29,18 @@
                 <div class="portlet-body form clearfix">
                     <div class="col-md-4 blog-img blog-tag-data">
                         <div class="form-group">
-                            <img src="~/assets/admin/pages/media/gallery/image4.jpg" alt="" class="img-responsive">
+                            <img src="@Model.post.Images.First().FilePath" alt="" class="img-responsive preview-product" style="height: 240px;width: auto;">
                         </div>
                         <div class="form-group">
                             <ul class="list-inline blog-images for">
-                                <li>
-                                    <a href="javascript:;">
-                                        <img alt="" src="../../assets/admin/pages/media/blog/1.jpg">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <img alt="" src="../../assets/admin/pages/media/blog/2.jpg">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <img alt="" src="../../assets/admin/pages/media/blog/7.jpg">
-                                    </a>
-                                </li>
+                                @foreach (var item in Model.post.Images)
+                                {
+                                    <li>
+                                        <a href="javascript:;">
+                                            <img alt="" src="@item.FilePath" class="product-image">
+                                        </a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -72,7 +65,7 @@
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label class="control-label col-md-7">Posted by: </label>
-                                <span>@Model.userManager.Users.Where(q => q.Id == Model.post.UserId).SingleOrDefault().UserName</span>
+                                <span>@Model.post.User.UserName</span>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -85,7 +78,7 @@
                             <div class="col-md-6">
                                 <label class="control-label col-md-7">Ad Type: </label>
                                 <span>
-                                    @{ string adType = Model.post.AdType == 0 ? "Offered" : "Wanted"; }  
+                                    @{ string adType = Model.post.AdType == 0 ? "Offered" : "Wanted"; }
                                     @adType
                                 </span>
                             </div>
@@ -99,101 +92,74 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row col-md-12">
-                        <span>ALSO ON POST FREE ADS</span>
-                        <div class="row thumbnails">
-                            <div class="col-md-3">
-                                <div class="meet-our-team">
-                                    <img src="../../assets/admin/pages/media/pages/2.jpg" alt="" class="img-responsive">
-                                    <div class="team-info">
-                                        <small>Project Manager</small>
-                                        <p>
-                                            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem...
-                                        </p>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="meet-our-team">
-                                    <img src="../../assets/admin/pages/media/pages/3.jpg" alt="" class="img-responsive">
-                                    <div class="team-info">
-                                        <small>Project Manager</small>
-                                        <p>
-                                            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem...
-                                        </p>
+                    <div class="row">
+                        <span style="padding: 57px;font-weight: bold;font-size: 24px;font-family: emoji;">ALSO ON POST FREE ADS</span>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="meet-our-team">
-                                    <img src="../../assets/admin/pages/media/pages/2.jpg" alt="" class="img-responsive">
-                                    <div class="team-info">
-                                        <small>Project Manager</small>
-                                        <p>
-                                            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem...
-                                        </p>
+                        <div class="col-md-12">
 
-                                    </div>
+                            <div class="carousel slide multi-item-carousel" id="theCarousel">
+                                <div class="carousel-inner">
+
+                                    @foreach (var item in Model.posts)
+                                    {
+                                        <div class="item active">
+                                            <div class="col-xs-4">
+                                                <a href="#1">
+                                                    <img src="@item.Images.First().FilePath" class="img-responsive">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="meet-our-team">
-                                    <img src="../../assets/admin/pages/media/pages/3.jpg" alt="" class="img-responsive">
-                                    <div class="team-info">
-                                        <small>Project Manager</small>
-                                        <p>
-                                            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem...
-                                        </p>
-                                    </div>
-                                </div>
+                                <a class="left carousel-control" href="#theCarousel" data-slide="prev" style="width: 0px;"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                                <a class="right carousel-control" href="#theCarousel" data-slide="next" style="width: 0px;"><i class="glyphicon glyphicon-chevron-right"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="row">
-                            <span class="margin-top-10">0 comments</span>
-                            <hr />
-                            <div class="form-group row">
-                                <div class="col-md-1">
-                                    <img src="../../assets/admin/pages/media/blog/5.jpg" class="avatar" style="width: 40px" />
-                                </div>
-                                <div class="col-md-11">
-                                    <input type="text" class="form-control" style="height:40px" placeholder="Start the discussion" />
-                                    <span>LOG IN WITH</span>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-1"></div>
-                                <div class="col-md-2">
-                                    <ul class="social-icons">
-                                        <li>
-                                            <a href="javascript:;" data-original-title="vk" class="vk">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;" data-original-title="vk" class="vk">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;" data-original-title="vk" class="vk">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;" data-original-title="vk" class="vk">
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-8" style=" margin-top: -19px;">
-                                    <span>OR SIGN UP WITH DIQUS</span>
-                                    <input type="text" class="form-control" />
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+                 <div class="col-md-12">
+                      <div class="row">
+                          <span class="margin-top-10">0 comments</span>
+                          <hr />
+                          <div class="form-group row">
+                              <div class="col-md-1">
+                                  <img src="../../assets/admin/pages/media/blog/5.jpg" class="avatar" style="width: 40px" />
+                              </div>
+                              <div class="col-md-11">
+                                  <input type="text" class="form-control" style="height:40px" placeholder="Start the discussion" />
+                                  <span>LOG IN WITH</span>
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <div class="col-md-1"></div>
+                              <div class="col-md-2">
+                                  <ul class="social-icons">
+                                      <li>
+                                          <a href="javascript:;" data-original-title="vk" class="vk">
+                                          </a>
+                                      </li>
+                                      <li>
+                                          <a href="javascript:;" data-original-title="vk" class="vk">
+                                          </a>
+                                      </li>
+                                      <li>
+                                          <a href="javascript:;" data-original-title="vk" class="vk">
+                                          </a>
+                                      </li>
+                                      <li>
+                                          <a href="javascript:;" data-original-title="vk" class="vk">
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                              <div class="col-md-8" style=" margin-top: -19px;">
+                                  <span>OR SIGN UP WITH DIQUS</span>
+                                  <input type="text" class="form-control" />
+                              </div>
+                          </div>
+                      </div>
+                    -->
+                </div>
                 </div>
             </div>
             <!-- END PORTLET-->
@@ -201,3 +167,36 @@
     </div>
     <!-- END PAGE CONTENT INNER -->
 </div>
+@section scripts {
+    <script>
+        $(document).on("click", "img.product-image", function () {
+            const productImg = $(this).attr("src");
+            $(".preview-product").attr("src", productImg);
+        });
+
+
+        // Instantiate the Bootstrap carousel
+        $('.multi-item-carousel').carousel({
+            interval: false
+        });
+
+        // for every slide in carousel, copy the next slide's item in the slide.
+        // Do the same for the next, next item.
+        $('.multi-item-carousel .item').each(function () {
+            var next = $(this).next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+            next.children(':first-child').clone().appendTo($(this));
+            next.children(':first-child').remove();
+            if (next.next().length > 0) {
+                next.next().children(':first-child').clone().appendTo($(this));
+                next.next().children(':first-child').remove();
+            } else {
+                $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+
+            }
+        });
+
+    </script>
+}

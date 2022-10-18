@@ -32,7 +32,6 @@ namespace Community.Models
         public virtual Category Category { get; set; }
         public virtual Country Country { get; set; }
         public virtual State State { get; set; }
-        public virtual City City { get; set; }
         public virtual ApplicationUser User { get; set; }
     }
 }
