@@ -19,19 +19,19 @@ namespace Community.Helpers
                 string active = i == 0 ? "active" : "";
                 j++;
 
-                if (i == 0 || i  == 3)
+                if (i == 0 || i  == 4)
                 {
-                    resultHtml += "<div class='item "+ active + @"'>";
+                    resultHtml += "<div class='item "+ active + @"' style='margin-left:40px'>";
                     i = 0;
                 }
 
-                resultHtml += @"<div class='col-xs-4'>
-                                   <a href='/post/details/"+item.Id+@"'>
+                resultHtml += @"<div class='col-xs-2' style='width: auto;'>
+                                   <a href='/post/details/" + item.Id+@"'>
                                       <img src ='"+item.Images.First().FilePath+@"' class='img-responsive' style='height:150px' />
                                     </a>
                                 </div>";
 
-                if (i  == 2 || (posts.Count() % 3 !=0 && j == posts.Count()))
+                if (i  == 3 || (posts.Count() % 4 !=0 && j == posts.Count()))
                 {
                     resultHtml += "</div>";
                 }

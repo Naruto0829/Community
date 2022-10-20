@@ -74,11 +74,31 @@
                                     <label class="control-label col-md-7">Location: </label>
                                     <span>@Model.countryName</span>
                                 </div>
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-7">Phone: </label>
+                                    <span>@Model.post.PhoneNumber</span>
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-6">
                                     <label class="control-label col-md-7">Posted by: </label>
                                     <span>@Model.post.User.UserName</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-7">Advertiser Type: </label>
+                                    <span>
+                                        @{ string str = "";}
+                                        
+                                        @if (Model.post.AdvertiserType == 0)
+                                        {
+                                            str = "individual";
+                                        } else if (Model.post.AdvertiserType == 1)
+                                        {
+                                            str = "Professional/Business";
+                                        }
+
+                                        @str
+                                    </span>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -105,7 +125,7 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label>Description</label>
-                                    <div class="well" style="height: 300px;overflow-y: auto;"> 
+                                    <div class="well" style="height: 300px;overflow-y: auto;background-color: white;"> 
                                         @Html.Raw(Model.post.Description)
                                     </div>
                                 </div>

@@ -82,10 +82,10 @@ namespace Community.Controllers
         }
 
         [HttpGet]
-        public String GetStates(int? countryId)
+        public string GetStates(int id)
         {
             var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
-            var states = dbContext.States.Where(item => item.CountryId == countryId).ToList();
+            var states = dbContext.States.Where(item => item.CountryId == id).ToList();
 
             string statesHtml = "<option value='0'>--Select Region--</option>";
 
@@ -98,10 +98,10 @@ namespace Community.Controllers
         }
 
         [HttpGet]
-        public String GetCities(int? regionId)
+        public string GetCities(int id)
         {
             var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
-            var cities = dbContext.Cities.Where(item => item.StateId == regionId).ToList();
+            var cities = dbContext.Cities.Where(item => item.StateId == id).ToList();
 
             string citiesHtml = "<option value='0'>--Select City--</option>";
 
@@ -169,6 +169,37 @@ namespace Community.Controllers
             return View();
         }
 
+        public string Remove(int id)
+        {
+            try
+            {
+                var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+                var attaches = dbContext.Attachments.Where(q => q.PostId == id).ToList();
+
+                Post post = dbContext.Posts.Where(q => q.Id == id).SingleOrDefault();
+                dbContext.Posts.Remove(post);
+                dbContext.SaveChanges();
+
+                foreach(var item in attaches)
+                {
+                    string strPhysicalFolder = Server.MapPath("/assets/uploads/");
+                    string strFileFullPath   = strPhysicalFolder + item.HashName;
+
+                    FileInfo file = new FileInfo(strFileFullPath);
+
+                    if (file.Exists)        //check file exsit or not  
+                    {
+                        file.Delete();
+                    }
+                }
+                return "Your Ads is removed successfully";
+            }
+            catch
+            {
+                return "Something went wrong";
+            }
+        }
+
         private void handleTag(string tags, int postId)
         {
             string[] items = tags.Split(',');
@@ -203,7 +234,20 @@ namespace Community.Controllers
                 }
             }
         }
+        public ActionResult Search(string query, FormCollection collection)
+        {
+            var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
 
+            PostModelVm pvm = new PostModelVm();
+
+            var  posts = from e in dbContext.Posts
+                                   where e.Title.Contains(query) || e.Description.Contains(query)
+                         select e;
+
+            pvm.posts = posts.ToList();
+
+            return View(pvm);
+        }
         private void handleFile(HttpFileCollectionBase fileCollection, int postId)
         {
             if (fileCollection.Count > 0)

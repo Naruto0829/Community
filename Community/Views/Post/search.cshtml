@@ -1,0 +1,39 @@
+@model Community.Models.PostModelVm
+@{
+    ViewBag.Title = "Community Activities Classfied Ads";
+    ViewBag.page = "Post";
+}
+
+<div class="container">
+    <!-- BEGIN PAGE BREADCRUMB -->
+    <ul class="page-breadcrumb breadcrumb">
+        <li>
+            <a href="#">Post Ads</a><i class="fa fa-circle"></i>
+        </li>
+        <li class="active">
+            Free Add
+        </li>
+    </ul>
+    <!-- END PAGE BREADCRUMB -->
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row margin-top-10">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        Search Result
+                    </div>
+                    <div class="actions">
+                        <a href="/" class="btn btn-circle btn-sm btn-danger"><i class="fa fa-reply"></i>back to list page</a>
+                    </div>
+                </div>
+                <div class="portlet-body clearfix">
+                    @Html.Partial("../Home/postComponents")
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+</div>

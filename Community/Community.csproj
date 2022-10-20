@@ -4917,6 +4917,10 @@
     <Content Include="Views\AdminManage\postComponents.cshtml" />
     <Content Include="Views\Category\categorySelect.cshtml" />
     <Content Include="Views\Category\table.cshtml" />
+    <Content Include="Views\Shared\partials\footer.cshtml" />
+    <Content Include="Views\Shared\partials\menu.cshtml" />
+    <Content Include="Views\Shared\partials\topbar.cshtml" />
+    <Content Include="Views\Home\postComponents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
