@@ -4,6 +4,7 @@
     ViewBag.Title = "Post Ads Detail";
     ViewBag.page = "Home";
 }
+
 <link href="~/assets/page/css/carousel.less" />
 <div class="container">
     <!-- BEGIN PAGE BREADCRUMB -->
@@ -29,76 +30,93 @@
                     </div>
                 </div>
                 <div class="portlet-body form clearfix">
-                    <div class="col-md-4 blog-img blog-tag-data">
-                        <div class="form-group">
-                            <img src="@Model.post.Images.First().FilePath" alt="" class="img-responsive preview-product" style="height: 240px;width: auto;">
-                        </div>
-                        <div class="form-group">
-                            <ul class="list-inline blog-images for">
-                                @foreach (var item in Model.post.Images)
+                    <div class="row">
+                        <div class="col-md-4 blog-img blog-tag-data">
+                            <div class="form-group">
+                                <img src="@Model.post.Images.First().FilePath" alt="" class="img-responsive preview-product" style="height: 240px;width: auto;">
+                            </div>
+                            <div class="form-group">
+                                <ul class="list-inline blog-images for">
+                                    @foreach (var item in Model.post.Images)
+                                    {
+                                        <li>
+                                            <a href="javascript:;">
+                                                <img alt="" src="@item.FilePath" class="product-image">
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="form-group">
+                                @if(Model.post.VideoUrl != "")
                                 {
-                                    <li>
-                                        <a href="javascript:;">
-                                            <img alt="" src="@item.FilePath" class="product-image">
-                                        </a>
-                                    </li>
+                                    <video controls>
+                                        <source src="@Model.post.VideoUrl" type="video/webm">
+                                        <source src="@Model.post.VideoUrl" type="video/mp4">
+                                    </video>
                                 }
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="row col-md-12">
-                            <h1 style="margin-top: 0px">@Model.post.Title</h1>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-3">
-                                <button type="button" class="btn red">REPLY TO THIS AD</button>
                             </div>
-                            <div class="col-md-9">
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="row col-md-12">
+                                <h1 style="margin-top: 0px">@Model.post.Title</h1>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <button type="button" class="btn red" data-toggle="modal" href="#basic">REPLY TO THIS AD</button>
+                                </div>
+                                <div class="col-md-9">
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label class="control-label col-md-7">Location: </label>
-                                <span>@Model.countryName</span>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-7">Location: </label>
+                                    <span>@Model.countryName</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label class="control-label col-md-7">Posted by: </label>
-                                <span>@Model.post.User.UserName</span>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-7">Posted by: </label>
+                                    <span>@Model.post.User.UserName</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label class="control-label col-md-7">Posted on: </label>
-                                <span>@Model.post.created_at.ToString("dddd, dd MMMM yyyy")</span>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-7">Posted on: </label>
+                                    <span>@Model.post.created_at.ToString("dddd, dd MMMM yyyy")</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label class="control-label col-md-7">Ad Type: </label>
-                                <span>
-                                    @{ string adType = Model.post.AdType == 0 ? "Offered" : "Wanted"; }
-                                    @adType
-                                </span>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-7">Ad Type: </label>
+                                    <span>
+                                        @{ string adType = Model.post.AdType == 0 ? "Offered" : "Wanted"; }
+                                        @adType
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <label>Description</label>
-                                <div class="well">
-                                    @Model.post.Description
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-7">Price: </label>
+                                    <span>@Model.post.Price</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label>Description</label>
+                                    <div class="well" style="height: 300px;overflow-y: auto;"> 
+                                        @Html.Raw(Model.post.Description)
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
                     <div class="row">
                         <span style="padding: 57px;font-weight: bold;font-size: 24px;font-family: emoji;">ALSO ON POST FREE ADS</span>
 
-                        <div class="col-md-12">
+                        <div class="col-md-12" style="margin-top:20px">
 
                             <div class="carousel slide multi-item-carousel" id="theCarousel">
                                 <div class="carousel-inner">
@@ -157,6 +175,73 @@
     </div>
     <!-- END PAGE CONTENT INNER -->
 </div>
+<div class="modal fade" id="basic" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Reply Ads</h4>
+            </div>
+            <div class="modal-body">
+                <form action="#" id="form-username" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Reply To</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <span>@User.Identity.Name</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Ad Title</label>
+                        <div class="col-sm-9">
+                            <div class="input-group col-md-12">
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Your Name*</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <input type="text" class="form-control col-md-12" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Email Address*</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <input type="text" class="form-control col-md-12" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Phone Number</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <input type="text" class="form-control col-md-12" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Your Message*</label>
+                        <div class="col-sm-9">
+                                <textarea type="text" class="form-control col-md-12" ></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn blue">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 @section scripts {
     <script>
         $(document).on("click", "img.product-image", function () {

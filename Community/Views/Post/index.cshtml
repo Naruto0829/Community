@@ -125,17 +125,20 @@
                                         Select Category *
                                     </label>
                                     <select class="form-control" id="parentCateogry" name="parentCateogry">
-                                        <option value="0">--Select Parent Category--</option>
-                                        @{ var ctStr = ""; }
+                                        <option value="0">...</option>
+                                        @{ var ctStr = "&nbsp;"; }
                                         @foreach (var item in Model.categories)
                                         {
                                             ctStr = "";
-
-                                            for (var j = 0; j < item.Level * 2; j++)
+                                            if (item.Level > 1)
                                             {
-                                                ctStr += "-";
+                                                for (var j = 0; j < item.Level * 3; j++)
+                                                {
+                                                    ctStr += "&nbsp;";
+                                                }
                                             }
-                                            <option value="@item.Id">@ctStr @item.Name</option>
+
+                                            <option value="@item.Id">@Html.Raw(ctStr + item.Name)</option>
                                         }
                                     </select>
                                 </div>
@@ -305,6 +308,7 @@
         $(document).on("change", "select#country", function () {
             const countryId = $(this).val();
             const currency = $("#country option:selected").data("currency");
+            const countryName = $("#country option:selected").text();
 
             $("#region").html("<option value='0'>--Select Region--</option>");
             $("#city").html("<option value='0'>--Select City--</option>");
@@ -314,6 +318,15 @@
             $.get(`/Post/GetStates/${countryId}`, function (res) {
                 $("#region").html(res);
             });
+            console.log();
+            $.get(`https://restcountries.com/v3.1/name/${countryName}`, function (res) {
+                if (res.length > 0) {
+                    const { currencies } = res[0];
+                    const key = Object.keys(currencies).pop();
+                    const currencySymbol = currencies[key].symbol;
+                    $("#price").attr("placeholder", currencySymbol);
+                }
+            })
         });
 
 

@@ -1,24 +1,39 @@
 @model IEnumerable<Community.Models.CategoryVM>
 
-@{ var i = 0; var intent = 1;}
-
 @{
-    if (Model.ToList().Count > 0)
+    if ( Model.ToList().Count > 0)
     {
+        int parentIndex = 0;
+        int childIndex = 0;
+        int i = 0;
+        int indent = 1;
+
         foreach (var item in Model)
         {
+            if (item.ParentID == 0)
             {
-                i++;
-                intent = 2;
-                for (var j = 0; j < item.Level; j++)
-                {
-                    intent = item.Level * 20;
-                }
-
+                parentIndex++;
+                childIndex = 0;
+                indent = 0;
             }
+            else
+            {
+                childIndex++;
+                indent = item.Level * 10;
+            }
+
             <tr>
-                <td>@i</td>
-                <td style="text-indent: @intent.ToString()px !important">@item.Name</td>
+                <td style="text-indent: @indent.ToString()px" >
+
+                    @if ( item.ParentID == 0 )
+                    {
+                        @parentIndex;
+                    } else {
+                        @childIndex;
+                    }
+                </td>
+                <td>@item.Name</td>
+                <td>@parentIndex</td>
                 <td>
                     <div class="task-config-btn btn-group">
                         <a class="btn btn-xs default" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">

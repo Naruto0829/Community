@@ -11,27 +11,27 @@ namespace Community.Helpers
         public static string CarouselHtml(List<Post> posts)
         {
             int i = 0;
-
+            int j = 0;
             string resultHtml = "";
 
             foreach (var item in posts)
             {
-                
-
                 string active = i == 0 ? "active" : "";
+                j++;
 
-                if (i == 0 || i + 1 % 3 == 0)
+                if (i == 0 || i  == 3)
                 {
                     resultHtml += "<div class='item "+ active + @"'>";
+                    i = 0;
                 }
 
                 resultHtml += @"<div class='col-xs-4'>
                                    <a href='/post/details/"+item.Id+@"'>
-                                      <img src ='"+item.Images.First().FilePath+@"' class='img-responsive' />
+                                      <img src ='"+item.Images.First().FilePath+@"' class='img-responsive' style='height:150px' />
                                     </a>
                                 </div>";
 
-                if ((posts.Count < 4 && posts.Count == i + 1) || i + 1 % 3 == 0)
+                if (i  == 2 || (posts.Count() % 3 !=0 && j == posts.Count()))
                 {
                     resultHtml += "</div>";
                 }

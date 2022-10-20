@@ -37,43 +37,27 @@
                 </div>
                 <div class="portlet-body clearfix">
                     <div class="col-md-4">
-                        <div class="portlet box blue-hoki">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    Location
-                                </div>
-                            </div>
-                            <div class="portlet-body">
-                                <ul class="nav nav-pills nav-stacked p-6" style="padding: 12px">
-                                    <li><b>Country</b>: @Model.countryName</li>
-                                    <li><b>Region </b>: @Model.regionName</li>
-                                    <!--<li><a>Change Location</a></li>-->
-                                </ul>
-                                <div class="clearfix margin-bottom-10">
-                                </div>
-                                <ul class="nav nav-pills nav-stacked" style="max-width: 320px; max-height: 48vh; overflow-y: scroll; width: 320px;" id="category">
-                                    <li class="active" data-id="0">
-                                        <a href="javascript:;">
-                                            <span class="badge badge-warning pull-right">
-                                                @Model.posts.ToList().Count()
-                                            </span>
-                                            All Category
-                                        </a>
-                                    </li>
-                                    @foreach (var item in Model.categories)
-                                    {
-                                        <li data-id="@item.Id">
-                                            <a href="javascript:;">
-                                                <span class="badge badge-success pull-right">
-                                                    @Model.posts.Where(q => q.CategoryId == @item.Id).Count()
-                                                </span>
-                                                @item.Name
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
-                        </div>
+                        <ul class="nav nav-pills nav-stacked" id="category">
+                            <li class="active" data-id="0">
+                                <a href="javascript:;">
+                                    <span class="badge badge-warning pull-right">
+                                        @Model.posts.ToList().Count()
+                                    </span>
+                                    All Category
+                                </a>
+                            </li>
+                            @foreach (var item in Model.categories)
+                            {
+                                <li data-id="@item.Id">
+                                    <a href="javascript:;">
+                                        <span class="badge badge-success pull-right">
+                                            @Model.posts.Where(q => q.CategoryId == @item.Id).Count()
+                                        </span>
+                                        @item.Name
+                                    </a>
+                                </li>
+                            }
+                        </ul>
                     </div>
                     <div class="col-md-8">
                         <div class="portlet box">
@@ -90,7 +74,7 @@
                                 </div>
                             </div>
                             <div class="portlet-body" id="postListPanel">
-                                @Html.Partial("postComponents");
+                                @Html.Partial("postComponents")
                             </div>
                         </div>
                     </div>

@@ -1,15 +1,18 @@
 @model IEnumerable<Community.Models.CategoryVM>
 <select class="form-control" id="parentCateogry" name="parentCateogry">
-    <option value="0">--Select Parent Category--</option>
-    @{ var ctStr = ""; }
+    <option value="0">...</option>
+    @{ var ctStr = "&nbsp;"; }
     @foreach (var item in Model)
     {
         ctStr = "";
-
-        for (var j = 0; j < item.Level * 2; j++)
+        if (item.Level > 1)
         {
-            ctStr += "-";
+            for (var j = 0; j < item.Level * 3; j++)
+            {
+                ctStr += "&nbsp;";
+            }
         }
-        <option value="@item.Id">@ctStr @item.Name</option>
+
+        <option value="@item.Id">@Html.Raw(ctStr+item.Name)</option>
     }
 </select>

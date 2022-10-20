@@ -10,10 +10,7 @@
         <td>@Html.Raw(@item.Description)</td>
         <td>@item.User.UserName</td>
         <td style="display:flex">
-            @foreach (var img in item.Images)
-            {
-                <img src="@img.FilePath" style="width: 100px;height: 100px;padding: 11px;" />
-            }
+            @item.Category.Name
         </td>
         <td>
             @item.created_at.ToString("dddd, dd MMMM yyyy")

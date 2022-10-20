@@ -47,7 +47,7 @@
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>User</th>
-                                <th>Images</th>
+                                <th>Category</th>
                                 <th>Posted Date</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -80,7 +80,8 @@
             bootbox.confirm("Are you sure?",(res) => {
                 if (res) {
                     $.post("/AdminManage/updateStatus", { postId, status }, function (res) {
-                        bootbox.alert(res);
+                        toastr.success(res);
+
                         if (status == 0) {
                             $("tr#" + postId).find(".post-status").removeClass("label-success");
                             $("tr#" + postId).find(".post-status").addClass("label-info");

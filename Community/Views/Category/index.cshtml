@@ -49,6 +49,7 @@
                                <tr>
                                    <th>No</th>
                                    <th>Category Name</th>
+                                   <th>Level</th>
                                    <th>Action</th>
                                </tr>
                            </thead>
@@ -68,7 +69,7 @@
         function validate() {
             const category = $("#category").val();
             if (category == "") {
-                alert("Category is required");
+                toastr.error("Category is required","Error");
                 $("#category").focus();
                 return false;
             } else {
