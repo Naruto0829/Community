@@ -45,27 +45,60 @@
                 </div>
                 <div class="portlet-body clearfix">
                     <div class="col-md-4">
-                        <ul class="nav nav-pills nav-stacked" id="category">
-                            <li class="active" data-id="0">
-                                <a href="javascript:;">
-                                    <span class="badge badge-warning pull-right">
-                                        @Model.posts.ToList().Count()
-                                    </span>
-                                    All Category
-                                </a>
-                            </li>
-                            @foreach (var item in Model.categories)
-                            {
-                                <li data-id="@item.Id">
-                                    <a href="javascript:;">
-                                        <span class="badge badge-success pull-right">
-                                            @Model.posts.Where(q => q.CategoryId == @item.Id).Count()
-                                        </span>
-                                        @item.Name
-                                    </a>
-                                </li>
-                            }
-                        </ul>
+                        <div class="portlet box blue-hoki">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Location
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <ul class="nav nav-pills nav-stacked p-6" style="padding: 12px">
+                                    <li><b>Country</b>: @Model.countryName</li>
+                                    <li><b>Region </b>: @Model.regionName</li>
+                                        
+                                     @if (Model.cityName != "")
+                                     {
+                                        <li><b>City </b>:@Model.cityName</li>
+                                     }
+                                     <li><a data-toggle="modal" href="#basic">Change Location</a></li>
+                                </ul>
+                                <div class="clearfix margin-bottom-10">
+                                </div>
+                                <ul class="nav nav-pills nav-stacked" id="category">
+                                    <li class="active" data-id="0">
+                                        <a href="javascript:;">
+                                            <span class="badge badge-warning pull-right">
+                                                @Model.posts.ToList().Count()
+                                            </span>
+                                            All Category
+                                        </a>
+                                    </li>
+                                    @foreach (var item in Model.categories)
+                                    {
+                                        <li data-id="@item.Id">
+                                            <a href="javascript:;">
+                                                <span class="badge badge-success pull-right">
+                                                    @Model.posts.Where(q => q.CategoryId == @item.Id).Count()
+                                                </span>
+                                                @item.Name
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                                <h3 id="allTags" data-id="0" style="cursor: pointer;font-size: 18px;font-family: fantasy;">All Tags</h3>
+                                <ul class="list-inline sidebar-tags">
+                                    @foreach (var item in Model.tags)
+                                    {
+                                        <li>
+                                            <a href="javascript:;" id="tagBtn" data-id="@item.Id">
+                                                <i class="fa fa-tags"></i> @item.Name
+                                            </a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-8"  style="height: 800px;overflow-y: auto;">
                         <div class="portlet box">
@@ -84,6 +117,56 @@
         </div>
     </div>
     <!-- END PAGE CONTENT INNER -->
+    <div class="modal fade" id="basic" tabindex="-1" role="basic" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Choose Location</h4>
+                </div>
+                <div class="modal-body">
+                    <form  action="/Home/ChangeLocation" method="post" id="locationFrm" class="form-horizontal form-bordered">
+                       
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Country</label>
+                            <div class="col-sm-9">
+                                <select class="form-control col-md-12" name="country" id="country">
+                                    <option></option>
+                                    @foreach (var item in Model.countries)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Region</label>
+                            <div class="col-sm-9">
+                                <select class="form-control col-md-12" id="region" name="region">
+                                    <option>...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">City</label>
+                            <div class="col-sm-9">
+                                <select class="form-control col-md-12"  id="city" name="city">
+                                    <option>...</option>
+                                </select>
+                            </div>
+                        </div>
+                      
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn red" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn blue" onclick="changeLocation()">Location changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 </div>
 @section scripts {
     <script>
@@ -102,10 +185,54 @@
             getPosts(filterName, category);
         });
 
+        $(document).on('click', "#tagBtn, #allTags", function () {
+            var tagId = $(this).data("id");
+            $.get(`Home/GetAdsByTag?id=${tagId}`, function (res) {
+                $("#postListPanel").html(res);
+            });
+        });
+
         function getPosts(filterName, category) {
             $.get(`Home/filter?filterName=${filterName}&category_id=${category}`, function (res) {
                 $("#postListPanel").html(res);
             });
+        }
+
+        $(document).on("change", "select#country", function () {
+            const countryId = $(this).val();
+
+            $("#region").html("<option value='0'>...</option>");
+            $("#city").html("<option value='0'>...</option>");
+
+            $.get(`/Post/GetStates/${countryId}`, function (res) {
+                $("#region").html(res);
+            });
+           
+        });
+
+
+        $(document).on("change", "select#region", function () {
+            const regionId = $(this).val();
+
+            $("#city").html("<option value='0'>...</option>");
+
+            $.get(`/Post/GetCities/${regionId}`, function (res) {
+                $("#city").html(res);
+            });
+        });
+
+        function changeLocation() {
+            const country = $("select#country").val();
+            const region = $("select#region").val();
+
+            if (country == 0) {
+                toastr.error("Country is required", "Validation error");
+            } else if (region == 0) {
+                toastr.error("Region is required", "Validation error");
+            } else {
+                $("#locationFrm").submit();
+            }
+            
         }
     </script>
 }

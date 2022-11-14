@@ -27,7 +27,7 @@ namespace Community.Helpers
 
                 resultHtml += @"<div class='col-xs-2' style='width: auto;'>
                                    <a href='/post/details/" + item.Id+@"'>
-                                      <img src ='"+item.Images.First().FilePath+@"' class='img-responsive' style='height:150px' />
+                                      <img src ='"+item.Images.First().FilePath+@"' class='img-responsive' style='height:211px; width: 230px' />
                                     </a>
                                 </div>";
 

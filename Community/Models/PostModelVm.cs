@@ -11,11 +11,13 @@ namespace Community.Models
         public List<Country> countries;
         public List<State> states;
         public List<City> cities;
+        public List<Tag> tags;
         public List<Post> posts;
         public Post post;
         public ApplicationUserManager userManager;
         public string countryName;
         public string regionName;
+        public string cityName;
 
         public string GetDelayTime(DateTime oldTime)
         {

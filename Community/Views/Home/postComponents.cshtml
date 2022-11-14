@@ -6,7 +6,7 @@
 <div id="ads_@item.Id" class="well" style="background-color: white;">
     @if (User.Identity.GetUserId() == item.UserId)
     {
-        <button style="float:right" class="btn red" onclick="removePost(@item.Id)"><i class="fa fa-trash-o"></i></button>
+        <button style="float:right; padding: 0px;" class="btn red" onclick="removePost(@item.Id)"><i class="fa fa-trash-o"></i></button>
     }
     <a href="/post/details/@item.Id"><h4 class="block" style="color: #1d96fd; font-weight: bold; display: inline-block; cursor:pointer">@item.Title</h4></a>
     <span style="color: red">(@Model.GetDelayTime(item.created_at))</span>

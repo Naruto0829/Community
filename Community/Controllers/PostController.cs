@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.IO;
 using Community.Models;
+using System.Net.Mail;
 
 namespace Community.Controllers
 {
@@ -95,6 +96,41 @@ namespace Community.Controllers
             }
 
             return statesHtml;
+        }
+
+        [HttpPost, ValidateInput(false)]
+
+        public string SendMail(FormCollection collection)
+        {
+            string to = collection.Get("toEmail");                  //To address    
+            string from = collection.Get("fromEmail");              //From address    
+
+            MailMessage message = new MailMessage(from, to);
+
+            string mailbody = collection.Get("mailbody");
+            message.Subject = collection.Get("mailSubject");
+            message.Body = mailbody;
+            message.IsBodyHtml = true;
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
+            System.Net.NetworkCredential basicCredential1 = new
+            System.Net.NetworkCredential("yourmail id", "Password");
+
+            client.EnableSsl = true;
+            client.UseDefaultCredentials = false;
+            client.Credentials = basicCredential1;
+
+            try
+            {
+                client.Send(message);
+                return "The mail is sent successfully!";
+            }
+
+            catch (Exception ex)
+            {
+                return "Something went wrong in sending mail!";
+            }
+
         }
 
         [HttpGet]
@@ -253,7 +289,7 @@ namespace Community.Controllers
             if (fileCollection.Count > 0)
             {
                 var dbContext = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
-                Attachment attachment = new Attachment();
+                Models.Attachment attachment = new Models.Attachment();
 
                 for (int i = 0; i < fileCollection.Count; i++)
                 {

@@ -107,7 +107,6 @@ D:\Work\Community\Community\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Work\Community\Community\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Work\Community\Community\bin\Microsoft.Owin.Security.OAuth.xml
 D:\Work\Community\Community\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Work\Community\Community\obj\Debug\Community.csprojAssemblyReference.cache
 D:\Work\Community\Community\obj\Debug\Community.csproj.CoreCompileInputs.cache
 D:\Work\Community\Community\obj\Debug\Community.csproj.CopyComplete
 D:\Work\Community\Community\obj\Debug\Community.dll
@@ -118,3 +117,4 @@ D:\Work\Community\Community\obj\Debug\Community.Migrations.updateforiegnkey.reso
 D:\Work\Community\Community\obj\Debug\Community.Migrations.updatePostUserId.resources
 D:\Work\Community\Community\obj\Debug\Community.Migrations.PostCreatedAtUPdate.resources
 D:\Work\Community\Community\obj\Debug\Community.Migrations.UpdatePost.resources
+D:\Work\Community\Community\obj\Debug\Community.csprojAssemblyReference.cache

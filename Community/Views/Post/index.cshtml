@@ -314,7 +314,6 @@
             $.get(`/Post/GetStates/${countryId}`, function (res) {
                 $("#region").html(res);
             });
-            console.log();
             $.get(`https://restcountries.com/v3.1/name/${countryName}`, function (res) {
                 if (res.length > 0) {
                     const { currencies } = res[0];

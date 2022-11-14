@@ -21,7 +21,7 @@
     <div class="row margin-top-10">
         <div class="col-md-12 col-sm-12">
             <!-- BEGIN PORTLET-->
-            <div class="portlet light ">
+            <div class="portlet light">
                 <div class="portlet-title">
                     <div class="caption caption-md">
                         <i class="icon-bar-chart theme-font hide"></i>
@@ -31,9 +31,9 @@
                 </div>
                 <div class="portlet-body form clearfix">
                     <div class="row">
-                        <div class="col-md-4 blog-img blog-tag-data">
+                        <div class="col-md-5 blog-img blog-tag-data">
                             <div class="form-group">
-                                <img src="@Model.post.Images.First().FilePath" alt="" class="img-responsive preview-product" style="height: 240px;width: auto;">
+                                <img src="@Model.post.Images.First().FilePath" alt="" class="img-responsive preview-product" style="height: 35vh; width: auto;">
                             </div>
                             <div class="form-group">
                                 <ul class="list-inline blog-images for">
@@ -48,16 +48,16 @@
                                 </ul>
                             </div>
                             <div class="form-group">
-                                @if(Model.post.VideoUrl != "")
+                                @if (Model.post.VideoUrl != "")
                                 {
-                                    <video controls>
+                                    <video controls style="width: 440px;">
                                         <source src="@Model.post.VideoUrl" type="video/webm">
                                         <source src="@Model.post.VideoUrl" type="video/mp4">
                                     </video>
                                 }
                             </div>
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-sm-7">
                             <div class="row col-md-12">
                                 <h1 style="margin-top: 0px">@Model.post.Title</h1>
                             </div>
@@ -207,16 +207,16 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Reply To</label>
                         <div class="col-sm-9">
-                            <div class="input-group">
-                                <span>@User.Identity.Name</span>
+                            <div class="input-group control-label">
+                                <span id="toEmail">@User.Identity.Name</span>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Ad Title</label>
                         <div class="col-sm-9">
-                            <div class="input-group col-md-12">
-                                <span></span>
+                            <div class="input-group control-label">
+                                <span id="mailSubject">@Model.post.Title</span>
                             </div>
                         </div>
                     </div>
@@ -224,7 +224,7 @@
                         <label class="col-sm-3 control-label">Your Name*</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control col-md-12" />
+                                <input type="text" class="form-control col-md-12" id="name" />
                             </div>
                         </div>
                     </div>
@@ -232,29 +232,29 @@
                         <label class="col-sm-3 control-label">Email Address*</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control col-md-12" />
+                                <input type="text" class="form-control col-md-12" id="fromEmail" />
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Phone Number</label>
+                        <label class="col-sm-3 control-label" >Phone Number</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control col-md-12" />
+                                <input type="text" class="form-control col-md-12" id="phoneNumber" />
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Your Message*</label>
                         <div class="col-sm-9">
-                                <textarea type="text" class="form-control col-md-12" ></textarea>
+                                <textarea type="text" class="form-control col-md-12" id="message"></textarea>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn blue">Save changes</button>
+                <button type="button" class="btn blue" id="sendMailBtn">Send Mail</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -269,6 +269,26 @@
             $(".preview-product").attr("src", productImg);
         });
 
+        $(document).on("click", "button#sendMailBtn", () => {
+
+            const mailSubject = $("#mailSubject").text();
+            const fromEmail = $("#fromEmail").val();
+            const toEmail = $("#toEmail").text();
+            const name = $("#name").val();
+            const phoneNumber = $("#phoneNumber").val();
+            const mailbody = $("#message").val();
+
+            let createHtml = `
+                        <p>${mailbody}</p>
+                        <p>Contact Phone Number : ${phoneNumber}</p>
+                    `;
+
+            var params = { mailSubject: mailSubject + " from  " + name, fromEmail, toEmail, mailbody: createHtml };
+
+            $.post("/Post/SendMail", params, function (response) {
+                console.log(response);
+            });
+        });
 
         // Instantiate the Bootstrap carousel
         $('.multi-item-carousel').carousel({
